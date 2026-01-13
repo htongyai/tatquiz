@@ -104,6 +104,21 @@ class _StartScreenState extends State<StartScreen> {
     }
   }
 
+  // Get info layer image based on current language
+  String _getInfoLayerImage() {
+    if (LanguageConfig.isSpanish) {
+      return 'assets/spainstart.png';
+    }
+    if (LanguageConfig.isRussian) {
+      return 'assets/russianstart.png';
+    }
+    if (LanguageConfig.isGerman) {
+      return 'assets/germanstart.png';
+    }
+    // Default for English
+    return 'assets/englishstart.png';
+  }
+
   Future<void> _onStartJourney() async {
     // If auth is still in progress, wait for it
     if (_isAuthenticating && !_authCompleted) {
@@ -174,7 +189,7 @@ class _StartScreenState extends State<StartScreen> {
                         children: [
                           // Info layer image
                           Image.asset(
-                            'assets/Info layer2.png',
+                            _getInfoLayerImage(),
                             width: double.infinity,
                             fit: BoxFit.contain,
                           ),
@@ -219,47 +234,47 @@ class _StartScreenState extends State<StartScreen> {
                 ),
               ),
               // Globe icon for language selector (always visible)
-              Positioned(
-                top: 20,
-                right: 20,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: _showLanguageSelector,
-                    borderRadius: BorderRadius.circular(25),
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        //color: Colors.white.withOpacity(0.9),
-                        shape: BoxShape.circle,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.black.withOpacity(0.2),
-                        //     blurRadius: 8,
-                        //     offset: const Offset(0, 2),
-                        //   ),
-                        //],
-                      ),
-                      child: const Icon(
-                        Icons.language,
-                        size: 18,
-                        color: Color(0xFF00477A),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // Language selector (debug only - kept for backward compatibility)
-              if (debugLanguage)
-                Positioned(
-                  top: 70,
-                  right: 20,
-                  child: LanguageSelector(
-                    onLanguageChanged: () {
-                      setState(() {});
-                    },
-                  ),
-                ),
+              // Positioned(
+              //   top: 20,
+              //   right: 20,
+              //   child: Material(
+              //     color: Colors.transparent,
+              //     child: InkWell(
+              //       onTap: _showLanguageSelector,
+              //       borderRadius: BorderRadius.circular(25),
+              //       child: Container(
+              //         padding: const EdgeInsets.all(12),
+              //         decoration: BoxDecoration(
+              //           //color: Colors.white.withOpacity(0.9),
+              //           shape: BoxShape.circle,
+              //           // boxShadow: [
+              //           //   BoxShadow(
+              //           //     color: Colors.black.withOpacity(0.2),
+              //           //     blurRadius: 8,
+              //           //     offset: const Offset(0, 2),
+              //           //   ),
+              //           //],
+              //         ),
+              //         child: const Icon(
+              //           Icons.language,
+              //           size: 18,
+              //           color: Color(0xFF00477A),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // // Language selector (debug only - kept for backward compatibility)
+              // if (debugLanguage)
+              //   Positioned(
+              //     top: 70,
+              //     right: 20,
+              //     child: LanguageSelector(
+              //       onLanguageChanged: () {
+              //         setState(() {});
+              //       },
+              //     ),
+              //   ),
             ],
           ),
         ),

@@ -146,6 +146,32 @@ class _FullResultScreenState extends State<FullResultScreen> {
     }
   }
 
+  String _getRegionIconPath(String region) {
+    // Map region names to icon assets
+    final regionLower = region.toLowerCase();
+    if (regionLower.contains('west') || regionLower.contains('oeste')) {
+      return 'assets/West.png';
+    } else if (regionLower.contains('central') ||
+        regionLower.contains('centro')) {
+      return 'assets/Central.png';
+    } else if (regionLower.contains('east') &&
+            !regionLower.contains('northeast') ||
+        regionLower.contains('este') && !regionLower.contains('noreste')) {
+      return 'assets/East.png';
+    } else if (regionLower.contains('north') &&
+            !regionLower.contains('northeast') ||
+        regionLower.contains('norte') && !regionLower.contains('noreste')) {
+      return 'assets/North.png';
+    } else if (regionLower.contains('northeast') ||
+        regionLower.contains('noreste')) {
+      return 'assets/Northeast.png';
+    } else if (regionLower.contains('south') || regionLower.contains('sur')) {
+      return 'assets/South.png';
+    }
+    // Default fallback
+    return 'assets/Central.png';
+  }
+
   Future<void> _saveAndShareImage() async {
     try {
       // Track share button click
@@ -209,9 +235,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         } else {
           if (mounted) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Could not open maps')),
+            );
           }
         }
       }
@@ -225,6 +251,25 @@ class _FullResultScreenState extends State<FullResultScreen> {
   }
 
   String _getCharacterProfileImagePath(String characterName) {
+    // Spanish language images
+    if (LanguageConfig.isSpanish) {
+      switch (characterName) {
+        case 'Pla-Kad':
+          return 'assets/Pla kad Profile_Full Result_Spanish.png';
+        case 'Ping':
+          return 'assets/Ping Profile_Full  Result_Spanish.png';
+        case 'Mali':
+          return 'assets/Mali Profile_Full Result_Spanish.png';
+        case 'Chang-Noi':
+          return 'assets/Chang noi Profile_Full Result_Spanish.png';
+        case 'Chai':
+          return 'assets/Chai Profile_Full Result_Spanish.png';
+        default:
+          return 'assets/Mali Profile_Full Result_Spanish.png';
+      }
+    }
+
+    // Default English images
     switch (characterName) {
       case 'Pla-Kad':
         return 'assets/character_profiles/plakad_profile.png';
@@ -243,6 +288,24 @@ class _FullResultScreenState extends State<FullResultScreen> {
 
   // Get character-specific travel vibe description
   String _getCharacterTravelVibe(String characterName) {
+    if (LanguageConfig.isSpanish) {
+      switch (characterName) {
+        case 'Mali':
+          return 'Mali es elegante y conoce todos los cafés de la ciudad. Cuida su feed con sky bars, hoteles de diseño y espacios de arte. Si es lindo, acogedor o cool, Mali está ahí.';
+        case 'Chai':
+          return 'Chai es todo paz, naturaleza y una buena siesta con vistas a la montaña. Se toma su tiempo para absorber lentamente el ambiente de cada lugar que visita. Camina descalzo sobre el césped y disfruta hablando con las señoras en los mercados locales.';
+        case 'Chang-Noi':
+          return 'A Chang-Noi le encantan los templos escondidos de Tailandia, los mercados y las tradiciones antiguas. Con una pequeña libreta y una cámara vintage, Chang-Noi siempre hace preguntas y aprende de los lugareños.';
+        case 'Ping':
+          return 'Ping se mueve en motocicleta y se sumerge en olas—literalmente. Siempre busca la próxima emoción o puesta de sol en la playa. A Ping le importan las experiencias, no los horarios.';
+        case 'Pla-Kad':
+          return 'Pla-Kad viaja con estilo, desde resorts de lujo en Phuket hasta spas de alta gama en Bangkok. Sofisticado, pero audaz, encuentra consuelo en fine dining, hoteles de diseño y experiencias exclusivas. Para Pla-Kad, el lujo no es sólo riqueza, sino refinamiento, arte y detalle.';
+        default:
+          return 'Mali es elegante y conoce todos los cafés de la ciudad. Cuida su feed con sky bars, hoteles de diseño y espacios de arte.';
+      }
+    }
+
+    // English (default)
     switch (characterName) {
       case 'Mali':
         return 'Mali is stylish and knows all the best cafés in town. She curates her feed with sky bars, design hotels, and art spaces. If it\'s cute, cozy, or cool — Mali\'s there.';
@@ -261,6 +324,54 @@ class _FullResultScreenState extends State<FullResultScreen> {
 
   // Get character-specific animal/symbol info
   Map<String, String> _getCharacterAnimal(String characterName) {
+    if (LanguageConfig.isSpanish) {
+      switch (characterName) {
+        case 'Mali':
+          return {
+            'name': 'Gato Siamés (Wichien Maat)',
+            'image': 'assets/ Character/Mali/Siamese Cat.jpg',
+            'description':
+                'Nacida en la realeza del antiguo Siam, esta elegante gata con ojos de zafiro azul traía fortuna y protegía los templos sagrados. Antiguamente, solo la nobleza podía poseerlos. Ahora, el gato siamés lleva la gracia tailandesa a través del mundo, su calma mirada cuenta historias de fe, belleza y amistad.',
+          };
+        case 'Chai':
+          return {
+            'name': 'Búfalo',
+            'image': 'assets/ Character/Chai/Buffalo.png',
+            'description':
+                'Antes de las máquinas, era el búfalo de agua el que araba los arrozales tailandeses, compartiendo sudor y tierra con los agricultores a través de generaciones. Representa gratitud, paciencia y fuerza humilde.',
+          };
+        case 'Chang-Noi':
+          return {
+            'name': 'Elefante',
+            'image': 'assets/ Character/Chang noi/Elephant.png',
+            'description':
+                'El elefante, símbolo nacional de Tailandia, utilizado históricamente en ceremonias reales y rituales culturales. Durante mucho tiempo han sido compañeros de la vida tailandesa. Hoy, los elefantes se han convertido en símbolos de sabiduría, lealtad y fuerza, y son un recordatorio del poderoso y amable corazón de Tailandia.',
+          };
+        case 'Ping':
+          return {
+            'name': 'Dugongo',
+            'image': 'assets/ Character/Ping/Dugong.png',
+            'description':
+                'El dugongo, la "vaca marina" de Tailandia, vive pacíficamente a lo largo de la costa de Andamán. Es amable, curioso y amado como símbolo de conservación marina y del encanto de las islas tailandesas.',
+          };
+        case 'Pla-Kad':
+          return {
+            'name': 'Pez Betta',
+            'image': 'assets/ Character/Pla kad/Betta Fish.png',
+            'description':
+                'El tesoro acuático nacional de Tailandia, el pez Betta, es admirado mundialmente por sus vibrantes colores, aletas gráciles y espíritu de lucha. Representa tanto el arte tailandés como la capacidad del país de combinar la tradición con la sofisticación moderna.',
+          };
+        default:
+          return {
+            'name': 'Gato Siamés',
+            'image': 'assets/ Character/Mali/Siamese Cat.jpg',
+            'description':
+                'Un gato elegante que representa la gracia y belleza tailandesa.',
+          };
+      }
+    }
+
+    // English (default)
     switch (characterName) {
       case 'Mali':
         return {
@@ -311,174 +422,163 @@ class _FullResultScreenState extends State<FullResultScreen> {
       case 'Mali':
         return [
           {
-            'label': 'Café Hopping',
-            'icon': 'assets/ Character/Mali/Icon Activities/CafeHopping.svg',
+            'label': AppLocalizations.cafeHopping,
+            'icon': 'assets/activity_icons/mali/icon_cafe.png',
           },
           {
-            'label': 'Art Walk',
-            'icon': 'assets/ Character/Mali/Icon Activities/Art Walk.svg',
+            'label': AppLocalizations.artWalk,
+            'icon': 'assets/activity_icons/mali/icon_art.png',
           },
           {
-            'label': 'Boutique Stay',
-            'icon': 'assets/ Character/Mali/Icon Activities/Boutique Stay.svg',
+            'label': AppLocalizations.boutiqueStay,
+            'icon': 'assets/activity_icons/mali/icon_boutiquestay.png',
           },
           {
-            'label': 'Contemporary Festivals',
-            'icon':
-                'assets/ Character/Mali/Icon Activities/Contemporary Festivals.svg',
+            'label': AppLocalizations.contemporaryFestivals,
+            'icon': 'assets/activity_icons/mali/icon_festival.png',
           },
           {
-            'label': 'Rooftop Dining',
-            'icon': 'assets/ Character/Mali/Icon Activities/Rooftop Dining.svg',
+            'label': AppLocalizations.rooftopDining,
+            'icon': 'assets/activity_icons/mali/icon_rooftop.png',
           },
           {
-            'label': 'Fashion/Design Market',
-            'icon': 'assets/ Character/Mali/Icon Activities/Design Market.svg',
+            'label': AppLocalizations.fashionDesignMarket,
+            'icon': 'assets/activity_icons/mali/icon_deisgnmarket.png',
           },
         ];
       case 'Chai':
         return [
           {
-            'label': 'Homestay',
-            'icon': 'assets/ Character/Chai/icon Activities/Homestay.svg',
+            'label': AppLocalizations.homestay,
+            'icon': 'assets/activity_icons/chai/icon_homestay.png',
           },
           {
-            'label': 'Mindfulness',
-            'icon': 'assets/ Character/Chai/icon Activities/Mindfulness.svg',
+            'label': AppLocalizations.mindfulness,
+            'icon': 'assets/activity_icons/chai/icon_mindfullness.png',
           },
           {
-            'label': 'Farm Walk',
-            'icon': 'assets/ Character/Chai/icon Activities/Farm Walk.svg',
+            'label': AppLocalizations.farmWalk,
+            'icon': 'assets/activity_icons/chai/icon_farmwalk.png',
           },
           {
-            'label': 'Market Breakfast',
-            'icon':
-                'assets/ Character/Chai/icon Activities/Market Breakfast.svg',
+            'label': AppLocalizations.marketBreakfast,
+            'icon': 'assets/activity_icons/chai/icon_marketbreakfast.png',
           },
           {
-            'label': 'Reading by River',
-            'icon':
-                'assets/ Character/Chai/icon Activities/Reading by River.svg',
+            'label': AppLocalizations.readingByRiver,
+            'icon': 'assets/activity_icons/chai/icon_reading.png',
           },
           {
-            'label': 'Soft Adventure',
-            'icon': 'assets/ Character/Chai/icon Activities/Soft Adventure.svg',
+            'label': AppLocalizations.softAdventure,
+            'icon': 'assets/activity_icons/chai/icon_softadventure.png',
           },
         ];
       case 'Chang-Noi':
         return [
           {
-            'label': 'Heritage Temple Tour',
-            'icon':
-                'assets/ Character/Chang noi/icon Activities/Heritage Temple Tour.svg',
+            'label': AppLocalizations.heritageTempleTour,
+            'icon': 'assets/activity_icons/changnoi/icon_templetour.png',
           },
           {
-            'label': 'Local Market',
-            'icon':
-                'assets/ Character/Chang noi/icon Activities/Local Market.svg',
+            'label': AppLocalizations.localMarket,
+            'icon': 'assets/activity_icons/changnoi/icon_localmarket.png',
           },
           {
-            'label': 'Craft Workshop',
-            'icon':
-                'assets/ Character/Chang noi/icon Activities/Craft Workshop.svg',
+            'label': AppLocalizations.craftWorkshop,
+            'icon': 'assets/activity_icons/changnoi/icon_craftworkshop.png',
           },
           {
-            'label': 'Vintage Souvenir',
-            'icon':
-                'assets/ Character/Chang noi/icon Activities/Vintage Souvenir.svg',
+            'label': AppLocalizations.vintageSouvenir,
+            'icon': 'assets/activity_icons/changnoi/icon_vintagesouvenir.png',
           },
           {
-            'label': 'Cooking Class',
-            'icon':
-                'assets/ Character/Chang noi/icon Activities/Cooking Class.svg',
+            'label': AppLocalizations.cookingClass,
+            'icon': 'assets/activity_icons/changnoi/icon_cookingclass.png',
           },
           {
-            'label': 'Traditional Festival',
-            'icon':
-                'assets/ Character/Chang noi/icon Activities/Traditional Festival.svg',
+            'label': AppLocalizations.traditionalFestival,
+            'icon': 'assets/activity_icons/changnoi/icon_traditionalfestival.png',
           },
         ];
       case 'Ping':
         return [
           {
-            'label': 'Snorkeling',
-            'icon': 'assets/ Character/Ping/Icon Activities/Snorkeling.svg',
+            'label': AppLocalizations.snorkeling,
+            'icon': 'assets/activity_icons/ping/icon_snorkeling.png',
           },
           {
-            'label': 'Kayaking',
-            'icon': 'assets/ Character/Ping/Icon Activities/Kayaking.svg',
+            'label': AppLocalizations.kayaking,
+            'icon': 'assets/activity_icons/ping/icon_kayaking.png',
           },
           {
-            'label': 'Beach Bonfire',
-            'icon': 'assets/ Character/Ping/Icon Activities/Beach Bonfire.svg',
+            'label': AppLocalizations.beachBonfire,
+            'icon': 'assets/activity_icons/ping/icon_beachbonfire.png',
           },
           {
-            'label': 'Coastal Ride',
-            'icon': 'assets/ Character/Ping/Icon Activities/Coastal Ride.svg',
+            'label': AppLocalizations.coastalRide,
+            'icon': 'assets/activity_icons/ping/icon_coastalride.png',
           },
           {
-            'label': 'Diving Trip',
-            'icon': 'assets/ Character/Ping/Icon Activities/Diving Trip.svg',
+            'label': AppLocalizations.divingTrip,
+            'icon': 'assets/activity_icons/ping/icon_divingtrip.png',
           },
           {
-            'label': 'Seafood Hunt',
-            'icon': 'assets/ Character/Ping/Icon Activities/Seafood Hunt.svg',
+            'label': AppLocalizations.seafoodHunt,
+            'icon': 'assets/activity_icons/ping/icon_seafoodhunt.png',
           },
         ];
       case 'Pla-Kad':
         return [
           {
-            'label': 'Luxury Spa/\nWellness Retreat',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Luxury Spa.svg',
+            'label': AppLocalizations.luxurySpa,
+            'icon': 'assets/activity_icons/plakad/icon_wellness.png',
           },
           {
-            'label': 'Fine Dining',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Fine Dining.svg',
+            'label': AppLocalizations.fineDining,
+            'icon': 'assets/activity_icons/plakad/icon_finedining.png',
           },
           {
-            'label': 'Art Gallery',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Art Gallery.svg',
+            'label': AppLocalizations.artGallery,
+            'icon': 'assets/activity_icons/plakad/icon_artgallery.png',
           },
           {
-            'label': 'Beachfront Resort',
-            'icon':
-                'assets/ Character/Pla kad/Icon Activities/Beachfront Resort.svg',
+            'label': AppLocalizations.beachfrontResort,
+            'icon': 'assets/activity_icons/plakad/icon_beachfrontresort.png',
           },
           {
-            'label': 'Fashion',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Fashion.svg',
+            'label': AppLocalizations.fashion,
+            'icon': 'assets/activity_icons/plakad/icon_fashion.png',
           },
           {
-            'label': 'Festivals',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Festivals.svg',
+            'label': AppLocalizations.festivals,
+            'icon': 'assets/activity_icons/plakad/icon_festival.png',
           },
         ];
       default:
         return [
           {
-            'label': 'Café Hopping',
-            'icon': 'assets/ Character/Mali/Icon Activities/CafeHopping.svg',
+            'label': AppLocalizations.cafeHopping,
+            'icon': 'assets/activity_icons/mali/icon_cafe.png',
           },
           {
-            'label': 'Art Walk',
-            'icon': 'assets/ Character/Mali/Icon Activities/Art Walk.svg',
+            'label': AppLocalizations.artWalk,
+            'icon': 'assets/activity_icons/mali/icon_art.png',
           },
           {
-            'label': 'Boutique Stay',
-            'icon': 'assets/ Character/Mali/Icon Activities/Boutique Stay.svg',
+            'label': AppLocalizations.boutiqueStay,
+            'icon': 'assets/activity_icons/mali/icon_boutiquestay.png',
           },
           {
-            'label': 'Contemporary Festivals',
-            'icon':
-                'assets/ Character/Mali/Icon Activities/Contemporary Festivals.svg',
+            'label': AppLocalizations.contemporaryFestivals,
+            'icon': 'assets/activity_icons/mali/icon_festival.png',
           },
           {
-            'label': 'Rooftop Dining',
-            'icon': 'assets/ Character/Mali/Icon Activities/Rooftop Dining.svg',
+            'label': AppLocalizations.rooftopDining,
+            'icon': 'assets/activity_icons/mali/icon_rooftop.png',
           },
           {
-            'label': 'Fashion/Design Market',
-            'icon': 'assets/ Character/Mali/Icon Activities/Design Market.svg',
+            'label': AppLocalizations.fashionDesignMarket,
+            'icon': 'assets/activity_icons/mali/icon_deisgnmarket.png',
           },
         ];
     }
@@ -991,6 +1091,23 @@ class _FullResultScreenState extends State<FullResultScreen> {
                           _getCharacterProfileImagePath(widget.characterName),
                           fit: BoxFit.cover,
                           width: double.infinity,
+                          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                            if (wasSynchronouslyLoaded) return child;
+                            return frame != null
+                                ? child
+                                : Container(
+                                    height: 400,
+                                    color: Colors.white.withOpacity(0.2),
+                                    child: const Center(
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 3,
+                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                          Color(0xFF8B1538),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                          },
                           errorBuilder: (context, error, stackTrace) {
                             // Log the error for debugging
                             print(
@@ -1058,9 +1175,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Your Travel Vibe',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.yourTravelVibe,
+                          style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1150,9 +1267,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Your Perfect Travel Activities',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.yourPerfectTravelActivities,
+                          style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1221,7 +1338,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Food Match for ${widget.characterName}',
+                          AppLocalizations.foodMatchFor(widget.characterName),
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -1232,7 +1349,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                         if (_isLoadingData)
                           const Center(child: CircularProgressIndicator())
                         else if (_foods.isEmpty)
-                          const Text('No food recommendations available')
+                          Text(AppLocalizations.noFoodRecommendations)
                         else
                           ..._foods.map((food) {
                             return Padding(
@@ -1253,7 +1370,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Thai Events for ${widget.characterName}',
+                          AppLocalizations.thaiEventsFor(widget.characterName),
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -1264,7 +1381,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                         if (_isLoadingData)
                           const Center(child: CircularProgressIndicator())
                         else if (_festivals.isEmpty)
-                          const Text('No festival recommendations available')
+                          Text(AppLocalizations.noFestivalRecommendations)
                         else
                           ..._festivals.map((festival) {
                             return Padding(
@@ -1284,9 +1401,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Top Spots for You',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.topSpotsForYou,
+                          style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -1296,7 +1413,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                         if (_isLoadingData)
                           const Center(child: CircularProgressIndicator())
                         else if (_locations.isEmpty)
-                          const Text('No location recommendations available')
+                          Text(AppLocalizations.noLocationRecommendations)
                         else
                           ..._locations.map((location) {
                             return Padding(
@@ -1311,15 +1428,69 @@ class _FullResultScreenState extends State<FullResultScreen> {
                   const SizedBox(height: 40),
 
                   // Discover the Beauty of Thailand Section
-                  Container(
-                    width: double.infinity,
-                    height: 300,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/landscape.png'),
-                        fit: BoxFit.fitWidth,
+                  Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 300,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/skyline.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
+                      // Dark overlay for better text visibility
+                      Container(
+                        width: double.infinity,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.4),
+                              Colors.black.withOpacity(0.3),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Text overlay
+                      Container(
+                        width: double.infinity,
+                        height: 300,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 40,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.discoverBeautyOfThailand,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                height: 1.3,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              AppLocalizations.thailandDescription,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white.withOpacity(0.95),
+                                height: 1.5,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 32),
@@ -1416,10 +1587,10 @@ class _FullResultScreenState extends State<FullResultScreen> {
                                         ),
                                       ),
                                       const SizedBox(width: 10),
-                                      const Flexible(
+                                      Flexible(
                                         child: Text(
-                                          'Challenge',
-                                          style: TextStyle(
+                                          AppLocalizations.challenge,
+                                          style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -1460,15 +1631,15 @@ class _FullResultScreenState extends State<FullResultScreen> {
                                     vertical: 12,
                                   ),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.share_rounded, size: 20),
-                                    SizedBox(width: 10),
+                                    const Icon(Icons.share_rounded, size: 20),
+                                    const SizedBox(width: 10),
                                     Flexible(
                                       child: Text(
-                                        'Share',
-                                        style: TextStyle(
+                                        AppLocalizations.shareResult,
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -1523,7 +1694,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
     );
   }
 
-  Widget _buildActivityIconWithSvg(String label, String svgPath) {
+  Widget _buildActivityIconWithSvg(String label, String imagePath) {
     return Expanded(
       child: Column(
         children: [
@@ -1535,7 +1706,37 @@ class _FullResultScreenState extends State<FullResultScreen> {
               color: const Color(0xFFF5E6D3),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: SvgPicture.asset(svgPath, color: const Color(0xFF8B1538)),
+            child: Image.asset(
+              imagePath,
+              width: 68,
+              height: 68,
+              fit: BoxFit.contain,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return frame != null
+                    ? child
+                    : const Center(
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF8B1538),
+                            ),
+                          ),
+                        ),
+                      );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                print('Error loading image: $imagePath - $error');
+                return const Icon(
+                  Icons.explore,
+                  size: 48,
+                  color: Color(0xFF8B1538),
+                );
+              },
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -1671,8 +1872,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey[300]!, width: 1),
             ),
             child: imageUrl != null && imageUrl.isNotEmpty
                 ? ClipRRect(
@@ -1689,8 +1891,21 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                        return Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFF8B1538),
+                              ),
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -1718,8 +1933,6 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     color: Colors.grey[700],
                     height: 1.4,
                   ),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -1815,8 +2028,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey[300]!, width: 1),
             ),
             child: imageUrl != null && imageUrl.isNotEmpty
                 ? ClipRRect(
@@ -1833,8 +2047,21 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                        return Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFF8B1538),
+                              ),
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -1873,8 +2100,6 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     color: Colors.grey[700],
                     height: 1.4,
                   ),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -1985,9 +2210,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       color: const Color(0xFFEB521A),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      'View Map',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.viewMap,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -2034,7 +2259,12 @@ class _FullResultScreenState extends State<FullResultScreen> {
           Container(
             width: double.infinity,
             height: 180,
-            decoration: BoxDecoration(color: Colors.grey[200]),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(color: Colors.grey[300]!, width: 1),
+              ),
+            ),
             child: imageUrl != null && imageUrl.isNotEmpty
                 ? Image.network(
                     imageUrl,
@@ -2046,7 +2276,22 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              Color(0xFF8B1538),
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   )
                 : const Center(
@@ -2082,16 +2327,45 @@ class _FullResultScreenState extends State<FullResultScreen> {
               ],
             ),
           ),
-          // Description
+          // Description and Highlight
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(
-              description,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[700],
-                height: 1.5,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[700],
+                    height: 1.5,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  "Highlights:",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[900],
+                    height: 1.5,
+                  ),
+                ),
+                if (highlight.isNotEmpty) ...[
+                  const SizedBox(height: 5),
+                  Text(
+                    // Remove extra newlines and spaces
+                    highlight
+                        .replaceAll(RegExp(r'\n+'), ' ')
+                        .replaceAll(RegExp(r'\s+'), ' ')
+                        .trim(),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
           // Dash line divider
@@ -2103,12 +2377,19 @@ class _FullResultScreenState extends State<FullResultScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          // Last section with map icon, area text, and View Map button
+          // Last section with region icon, area text, and View Map button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                const Icon(Icons.map, size: 20, color: Colors.grey),
+                Image.asset(
+                  _getRegionIconPath(region.isNotEmpty ? region : province),
+                  width: 24,
+                  height: 24,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.map, size: 20, color: Colors.grey);
+                  },
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -2129,9 +2410,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       color: const Color(0xFFEB521A),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      'View Map',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.viewMap,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -2160,9 +2441,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         } else {
           if (mounted) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Could not open maps')),
+            );
           }
         }
       }

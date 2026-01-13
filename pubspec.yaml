@@ -80,6 +80,12 @@ flutter:
     - assets/ Character/Pla kad/
     - assets/ Character/Pla kad/Icon Activities/
     - assets/character_profiles/
+    - assets/activity_icons/
+    - assets/activity_icons/mali/
+    - assets/activity_icons/chai/
+    - assets/activity_icons/changnoi/
+    - assets/activity_icons/ping/
+    - assets/activity_icons/plakad/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

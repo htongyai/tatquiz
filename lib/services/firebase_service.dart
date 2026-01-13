@@ -172,13 +172,13 @@ class FirebaseService {
           .add(data);
 
       // Update user document with latest quiz result and demographic info
-      await userDocRef.update({
+      await userDocRef.set({
         'latestQuizResult': characterResult,
         'latestQuizTimestamp': FieldValue.serverTimestamp(),
         'nationality': nationality, // Add nationality to user document
         'gender': gender, // Add gender to user document
         'age': age, // Add age to user document
-      });
+      }, SetOptions(merge: true));
 
       // Update country document stats and log
       await _updateCountryStats(
@@ -446,10 +446,10 @@ class FirebaseService {
       final userDoc = await userDocRef.get();
       final characterName = userDoc.data()?['latestQuizResult'] ?? 'Unknown';
 
-      await userDocRef.update({
+      await userDocRef.set({
         'challengeAttempted': true,
         'challengeAttemptedAt': FieldValue.serverTimestamp(),
-      });
+      }, SetOptions(merge: true));
 
       // Update country document stats
       final countryDocRef = _firestore
@@ -513,10 +513,10 @@ class FirebaseService {
       final sessionNumber = userDoc.data()?['sessionCount'] ?? 1;
 
       // Update user document with share click count
-      await userDocRef.update({
+      await userDocRef.set({
         'totalShareClicks': FieldValue.increment(1),
         'lastShareClickAt': FieldValue.serverTimestamp(),
-      });
+      }, SetOptions(merge: true));
 
       // Update country document stats
       final countryDocRef = _firestore
@@ -609,11 +609,11 @@ class FirebaseService {
           .add(challengeData);
 
       // Update user document with latest challenge result
-      await userDocRef.update({
+      await userDocRef.set({
         'latestChallengeScore': score,
         'latestChallengePercentage': percentage,
         'latestChallengeTimestamp': FieldValue.serverTimestamp(),
-      });
+      }, SetOptions(merge: true));
 
       // Update country document stats
       final countryDocRef = _firestore

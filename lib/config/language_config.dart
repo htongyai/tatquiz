@@ -9,7 +9,7 @@ const bool debugLanguage = false;
 enum AppLanguage { english, spanish, german, russian }
 
 class LanguageConfig {
-  static AppLanguage _currentLanguage = AppLanguage.english;
+  static AppLanguage _currentLanguage = AppLanguage.spanish;
 
   static void setLanguage(AppLanguage language) {
     _currentLanguage = language;

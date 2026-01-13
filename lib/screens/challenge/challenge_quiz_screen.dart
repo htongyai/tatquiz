@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/challenge_data.dart';
 import 'challenge_score_screen.dart';
 import 'challenge_feedback_popup.dart';
+import '../../config/app_localizations.dart';
 
 /// Challenge Quiz Screen
 ///
@@ -117,8 +118,8 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 12.0),
                                 child: Text(
-                                  'Question ${currentQuestion + 1} of ${questions.length}',
-                                  style: TextStyle(
+                                  AppLocalizations.questionOfChallenge(currentQuestion + 1, questions.length),
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: textColor,
@@ -310,7 +311,7 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    'True',
+                                    AppLocalizations.trueButton,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color:
@@ -376,7 +377,7 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'False',
+                                  AppLocalizations.falseButton,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color:

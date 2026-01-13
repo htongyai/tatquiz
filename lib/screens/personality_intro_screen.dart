@@ -129,11 +129,7 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
                         _resetAutoSlide();
                       },
                       itemBuilder: (context, index) {
-                        final images = [
-                          'assets/step1.png',
-                          'assets/step2.png',
-                          'assets/step3.png',
-                        ];
+                        final images = _getStepImages();
                         return GestureDetector(
                           onPanDown: (_) {
                             // Stop auto-slide when user starts dragging
@@ -243,6 +239,33 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
 
   Widget _buildProgressLine(int index) {
     return Container(width: 60, height: 3, color: const Color(0xFFD17B3C));
+  }
+
+  // Get step images based on current language
+  List<String> _getStepImages() {
+    if (LanguageConfig.isSpanish) {
+      return [
+        'assets/step1 Spanish.png',
+        'assets/step2 Spanish.png',
+        'assets/step3 Spanish.png',
+      ];
+    }
+    if (LanguageConfig.isRussian) {
+      return [
+        'assets/step1 Russian.png',
+        'assets/step2 Russian.png',
+        'assets/step3 Russian.png',
+      ];
+    }
+    if (LanguageConfig.isGerman) {
+      return [
+        'assets/step1 German.png',
+        'assets/step2 German.png',
+        'assets/step3 German.png',
+      ];
+    }
+    // Default images for English
+    return ['assets/step1.png', 'assets/step2.png', 'assets/step3.png'];
   }
 
   Widget _buildStepImage(String imagePath, int index) {
