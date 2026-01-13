@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'full_result_screen.dart';
 import '../config/app_localizations.dart';
 import '../config/language_config.dart';
@@ -34,12 +35,105 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   final GlobalKey _cardKey = GlobalKey();
   bool _isLoadingChallenge = false;
+  bool _isLoadingData = true;
+  List<String> _topSpotImages = [];
+  String? _dishImage;
+  String? _festivalImage;
 
   @override
   void initState() {
     super.initState();
     // Log screen view
     FirebaseService().logScreenView(screenName: 'result_screen');
+    // Fetch Firebase data
+    _fetchFirebaseImages();
+  }
+
+  Future<void> _fetchFirebaseImages() async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final countryCode = _getCountryCode();
+      final characterBackendId = _getCharacterBackendId(widget.characterName);
+
+      // Fetch top 3 locations
+      final locationsSnapshot = await firestore
+          .collection('characters')
+          .doc(countryCode)
+          .collection(characterBackendId)
+          .doc('content')
+          .collection('locations')
+          .limit(3)
+          .get();
+
+      // Fetch 1 food
+      final foodsSnapshot = await firestore
+          .collection('characters')
+          .doc(countryCode)
+          .collection(characterBackendId)
+          .doc('content')
+          .collection('foodMatches')
+          .limit(1)
+          .get();
+
+      // Fetch 1 festival
+      final festivalsSnapshot = await firestore
+          .collection('characters')
+          .doc(countryCode)
+          .collection(characterBackendId)
+          .doc('content')
+          .collection('festivalFits')
+          .limit(1)
+          .get();
+
+      setState(() {
+        _topSpotImages = locationsSnapshot.docs
+            .map((doc) => doc.data()['imageUrl'] as String?)
+            .where((url) => url != null && url.isNotEmpty)
+            .cast<String>()
+            .toList();
+
+        if (foodsSnapshot.docs.isNotEmpty) {
+          _dishImage = foodsSnapshot.docs.first.data()['imageUrl'] as String?;
+        }
+
+        if (festivalsSnapshot.docs.isNotEmpty) {
+          _festivalImage =
+              festivalsSnapshot.docs.first.data()['imageUrl'] as String?;
+        }
+
+        _isLoadingData = false;
+      });
+    } catch (e) {
+      print('Error fetching result screen images: $e');
+      setState(() {
+        _isLoadingData = false;
+      });
+    }
+  }
+
+  String _getCountryCode() {
+    if (LanguageConfig.isEnglish) return 'UnitedKingdom';
+    if (LanguageConfig.isSpanish) return 'Spain';
+    if (LanguageConfig.isGerman) return 'Germany';
+    if (LanguageConfig.isRussian) return 'Russia';
+    return 'UnitedKingdom';
+  }
+
+  String _getCharacterBackendId(String characterName) {
+    switch (characterName) {
+      case 'Mali':
+        return 'Chic';
+      case 'Chai':
+        return 'Chill';
+      case 'Ping':
+        return 'Adventure';
+      case 'Chang-Noi':
+        return 'Culture';
+      case 'Pla-Kad':
+        return 'Luxury';
+      default:
+        return 'Chic';
+    }
   }
 
   Future<Uint8List?> _captureWidget() async {
@@ -333,16 +427,25 @@ class _ResultScreenState extends State<ResultScreen> {
                                               _buildSpotBox(
                                                 firstRowImageSize,
                                                 firstRowImageSize,
+                                                _topSpotImages.isNotEmpty
+                                                    ? _topSpotImages[0]
+                                                    : null,
                                                 'assets/top1.png',
                                               ),
                                               _buildSpotBox(
                                                 firstRowImageSize,
                                                 firstRowImageSize,
+                                                _topSpotImages.length > 1
+                                                    ? _topSpotImages[1]
+                                                    : null,
                                                 'assets/top2.png',
                                               ),
                                               _buildSpotBox(
                                                 firstRowImageSize,
                                                 firstRowImageSize,
+                                                _topSpotImages.length > 2
+                                                    ? _topSpotImages[2]
+                                                    : null,
                                                 'assets/top3.png',
                                               ),
                                             ],
@@ -358,11 +461,13 @@ class _ResultScreenState extends State<ResultScreen> {
                                               _buildDishBox(
                                                 secondRowImageWidth,
                                                 secondRowImageHeight,
+                                                _dishImage,
                                                 'assets/dish.png',
                                               ),
                                               _buildDishBox(
                                                 secondRowImageWidth,
                                                 secondRowImageHeight,
+                                                _festivalImage,
                                                 'assets/fest.png',
                                               ),
                                             ],
@@ -491,26 +596,84 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
-  Widget _buildSpotBox(double width, double height, String imagePath) {
+  Widget _buildSpotBox(
+    double width,
+    double height,
+    String? firebaseImageUrl,
+    String fallbackAsset,
+  ) {
     return Container(
       width: width,
       height: height,
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(12),
-        image: DecorationImage(image: AssetImage(imagePath), fit: BoxFit.cover),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: firebaseImageUrl != null && firebaseImageUrl.isNotEmpty
+            ? Image.network(
+                firebaseImageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(fallbackAsset, fit: BoxFit.cover);
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  );
+                },
+              )
+            : Image.asset(fallbackAsset, fit: BoxFit.cover),
       ),
     );
   }
 
-  Widget _buildDishBox(double width, double height, String image) {
+  Widget _buildDishBox(
+    double width,
+    double height,
+    String? firebaseImageUrl,
+    String fallbackAsset,
+  ) {
     return Container(
       width: width,
       height: height,
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(12),
-        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: firebaseImageUrl != null && firebaseImageUrl.isNotEmpty
+            ? Image.network(
+                firebaseImageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(fallbackAsset, fit: BoxFit.cover);
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  );
+                },
+              )
+            : Image.asset(fallbackAsset, fit: BoxFit.cover),
       ),
     );
   }
