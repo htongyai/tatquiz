@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/quiz_data.dart';
 import '../models/challenge_data.dart';
 import '../config/app_localizations.dart';
+import '../config/language_config.dart';
 import '../services/firebase_service.dart';
 import 'challenge/challenge_intro_screen.dart';
 
@@ -52,32 +53,41 @@ class _FullResultScreenState extends State<FullResultScreen> {
   Future<void> _fetchFirebaseData() async {
     try {
       final firestore = FirebaseFirestore.instance;
-      
-      // Get character-specific subcollection name
-      final characterSubcollection = _getCharacterSubcollectionName(widget.characterName);
-      
+
+      // Get country code from language config
+      final countryCode = _getCountryCode();
+
+      // Get character backend ID
+      final characterBackendId = _getCharacterBackendId(widget.characterName);
+
       // Fetch locations (limit to 5)
       final locationsSnapshot = await firestore
+          .collection(countryCode)
+          .doc(characterBackendId)
           .collection('content')
           .doc('locations')
-          .collection(characterSubcollection)
+          .collection('locations')
           .limit(5)
           .get();
-      
+
       // Fetch foods
       final foodsSnapshot = await firestore
+          .collection(countryCode)
+          .doc(characterBackendId)
           .collection('content')
           .doc('foodMatches')
-          .collection(characterSubcollection)
+          .collection('foodMatches')
           .get();
-      
+
       // Fetch festivals
       final festivalsSnapshot = await firestore
+          .collection(countryCode)
+          .doc(characterBackendId)
           .collection('content')
           .doc('festivalFits')
-          .collection(characterSubcollection)
+          .collection('festivalFits')
           .get();
-      
+
       setState(() {
         _locations = locationsSnapshot.docs
             .map((doc) => {...doc.data(), 'id': doc.id})
@@ -90,8 +100,10 @@ class _FullResultScreenState extends State<FullResultScreen> {
             .toList();
         _isLoadingData = false;
       });
-      
-      print('Loaded ${_locations.length} locations, ${_foods.length} foods, ${_festivals.length} festivals');
+
+      print(
+        'Loaded ${_locations.length} locations, ${_foods.length} foods, ${_festivals.length} festivals',
+      );
     } catch (e) {
       print('Error fetching Firebase data: $e');
       setState(() {
@@ -100,21 +112,36 @@ class _FullResultScreenState extends State<FullResultScreen> {
     }
   }
 
-  String _getCharacterSubcollectionName(String characterName) {
-    // Map character names to Firebase subcollection names
+  String _getCountryCode() {
+    // Get country code based on language config (same logic as FirebaseService)
+    if (LanguageConfig.isEnglish) {
+      return 'UnitedKingdom';
+    } else if (LanguageConfig.isSpanish) {
+      return 'Spain';
+    } else if (LanguageConfig.isGerman) {
+      return 'Germany';
+    } else if (LanguageConfig.isRussian) {
+      return 'Russia';
+    }
+    // Default to UnitedKingdom if no match
+    return 'UnitedKingdom';
+  }
+
+  String _getCharacterBackendId(String characterName) {
+    // Map character names to backend IDs
     switch (characterName) {
-      case 'Chai':
-        return 'chai';
-      case 'Chang-Noi':
-        return 'changnoi';
       case 'Mali':
-        return 'mali';
+        return 'Chic';
+      case 'Chai':
+        return 'Chill';
       case 'Ping':
-        return 'ping';
+        return 'Adventure';
+      case 'Chang-Noi':
+        return 'Culture';
       case 'Pla-Kad':
-        return 'plakad';
+        return 'Luxury';
       default:
-        return 'mali'; // Default fallback
+        return 'Chic'; // Default fallback
     }
   }
 
@@ -1648,7 +1675,11 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.restaurant, size: 32, color: Colors.grey);
+                        return const Icon(
+                          Icons.restaurant,
+                          size: 32,
+                          color: Colors.grey,
+                        );
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1788,7 +1819,11 @@ class _FullResultScreenState extends State<FullResultScreen> {
                       imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.event, size: 32, color: Colors.grey);
+                        return const Icon(
+                          Icons.event,
+                          size: 32,
+                          color: Colors.grey,
+                        );
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -1991,9 +2026,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
           Container(
             width: double.infinity,
             height: 180,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-            ),
+            decoration: BoxDecoration(color: Colors.grey[200]),
             child: imageUrl != null && imageUrl.isNotEmpty
                 ? Image.network(
                     imageUrl,
@@ -2005,9 +2038,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return const Center(child: CircularProgressIndicator());
                     },
                   )
                 : const Center(
