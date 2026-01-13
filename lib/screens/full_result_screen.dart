@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:js' as js;
 import '../models/quiz_data.dart';
 import '../models/challenge_data.dart';
 import '../config/app_localizations.dart';
@@ -199,15 +200,19 @@ class _FullResultScreenState extends State<FullResultScreen> {
       final googleMapsUrl =
           'https://www.google.com/maps/search/?api=1&query=$query';
 
-      final uri = Uri.parse(googleMapsUrl);
-
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (kIsWeb) {
+        // For web, use js interop to open in new tab
+        js.context.callMethod('open', [googleMapsUrl, '_blank']);
       } else {
-        if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+        final uri = Uri.parse(googleMapsUrl);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          if (mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+          }
         }
       }
     } catch (e) {
@@ -2146,15 +2151,19 @@ class _FullResultScreenState extends State<FullResultScreen> {
   // Open Google Maps link directly
   Future<void> _openGoogleMapLink(String googleMapLink) async {
     try {
-      final uri = Uri.parse(googleMapLink);
-
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (kIsWeb) {
+        // For web, use js interop to open in new tab
+        js.context.callMethod('open', [googleMapLink, '_blank']);
       } else {
-        if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+        final uri = Uri.parse(googleMapLink);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          if (mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+          }
         }
       }
     } catch (e) {
