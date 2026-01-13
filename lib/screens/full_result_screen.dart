@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/quiz_data.dart';
 import '../models/challenge_data.dart';
 import '../config/app_localizations.dart';
@@ -34,12 +35,87 @@ class FullResultScreen extends StatefulWidget {
 
 class _FullResultScreenState extends State<FullResultScreen> {
   bool _isLoadingChallenge = false;
+  bool _isLoadingData = true;
+  List<Map<String, dynamic>> _locations = [];
+  List<Map<String, dynamic>> _foods = [];
+  List<Map<String, dynamic>> _festivals = [];
 
   @override
   void initState() {
     super.initState();
     // Log screen view
     FirebaseService().logScreenView(screenName: 'full_result_screen');
+    // Fetch data from Firebase
+    _fetchFirebaseData();
+  }
+
+  Future<void> _fetchFirebaseData() async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      
+      // Get character-specific subcollection name
+      final characterSubcollection = _getCharacterSubcollectionName(widget.characterName);
+      
+      // Fetch locations (limit to 5)
+      final locationsSnapshot = await firestore
+          .collection('content')
+          .doc('locations')
+          .collection(characterSubcollection)
+          .limit(5)
+          .get();
+      
+      // Fetch foods
+      final foodsSnapshot = await firestore
+          .collection('content')
+          .doc('foodMatches')
+          .collection(characterSubcollection)
+          .get();
+      
+      // Fetch festivals
+      final festivalsSnapshot = await firestore
+          .collection('content')
+          .doc('festivalFits')
+          .collection(characterSubcollection)
+          .get();
+      
+      setState(() {
+        _locations = locationsSnapshot.docs
+            .map((doc) => {...doc.data(), 'id': doc.id})
+            .toList();
+        _foods = foodsSnapshot.docs
+            .map((doc) => {...doc.data(), 'id': doc.id})
+            .toList();
+        _festivals = festivalsSnapshot.docs
+            .map((doc) => {...doc.data(), 'id': doc.id})
+            .toList();
+        _isLoadingData = false;
+      });
+      
+      print('Loaded ${_locations.length} locations, ${_foods.length} foods, ${_festivals.length} festivals');
+    } catch (e) {
+      print('Error fetching Firebase data: $e');
+      setState(() {
+        _isLoadingData = false;
+      });
+    }
+  }
+
+  String _getCharacterSubcollectionName(String characterName) {
+    // Map character names to Firebase subcollection names
+    switch (characterName) {
+      case 'Chai':
+        return 'chai';
+      case 'Chang-Noi':
+        return 'changnoi';
+      case 'Mali':
+        return 'mali';
+      case 'Ping':
+        return 'ping';
+      case 'Pla-Kad':
+        return 'plakad';
+      default:
+        return 'mali'; // Default fallback
+    }
   }
 
   Future<void> _saveAndShareImage() async {
@@ -1121,18 +1197,17 @@ class _FullResultScreenState extends State<FullResultScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ...(_getCharacterFoods(widget.characterName).map((
-                          food,
-                        ) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: _buildFoodCard(
-                              food['title']!,
-                              food['thai']!,
-                              food['description']!,
-                            ),
-                          );
-                        }).toList()),
+                        if (_isLoadingData)
+                          const Center(child: CircularProgressIndicator())
+                        else if (_foods.isEmpty)
+                          const Text('No food recommendations available')
+                        else
+                          ..._foods.map((food) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: _buildFoodCardFromFirebase(food),
+                            );
+                          }),
                       ],
                     ),
                   ),
@@ -1154,17 +1229,17 @@ class _FullResultScreenState extends State<FullResultScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ...(_getCharacterEvents(widget.characterName).map((
-                          event,
-                        ) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: _buildEventCard(
-                              event['title']!,
-                              event['description']!,
-                            ),
-                          );
-                        }).toList()),
+                        if (_isLoadingData)
+                          const Center(child: CircularProgressIndicator())
+                        else if (_festivals.isEmpty)
+                          const Text('No festival recommendations available')
+                        else
+                          ..._festivals.map((festival) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: _buildEventCardFromFirebase(festival),
+                            );
+                          }),
                       ],
                     ),
                   ),
@@ -1186,19 +1261,17 @@ class _FullResultScreenState extends State<FullResultScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ...(_getCharacterSpots(widget.characterName).map((
-                          spot,
-                        ) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: _buildSpotCard(
-                              spot['title']!,
-                              spot['location']!,
-                              spot['area']!,
-                              spot['description']!,
-                            ),
-                          );
-                        }).toList()),
+                        if (_isLoadingData)
+                          const Center(child: CircularProgressIndicator())
+                        else if (_locations.isEmpty)
+                          const Text('No location recommendations available')
+                        else
+                          ..._locations.map((location) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: _buildSpotCardFromFirebase(location),
+                            );
+                          }),
                       ],
                     ),
                   ),
@@ -1539,6 +1612,86 @@ class _FullResultScreenState extends State<FullResultScreen> {
     );
   }
 
+  Widget _buildFoodCardFromFirebase(Map<String, dynamic> food) {
+    final name = food['name'] ?? 'Unknown Food';
+    final description = food['description'] ?? '';
+    final imageUrl = food['imageUrl'] as String?;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey[300]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: imageUrl != null && imageUrl.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.restaurant, size: 32, color: Colors.grey);
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        );
+                      },
+                    ),
+                  )
+                : const Icon(Icons.restaurant, size: 32, color: Colors.grey),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey[700],
+                    height: 1.4,
+                  ),
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildEventCard(String title, String description) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -1579,6 +1732,98 @@ class _FullResultScreenState extends State<FullResultScreen> {
                     color: Colors.black,
                   ),
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey[700],
+                    height: 1.4,
+                  ),
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEventCardFromFirebase(Map<String, dynamic> festival) {
+    final name = festival['name'] ?? 'Unknown Festival';
+    final description = festival['description'] ?? '';
+    final festivalPeriod = festival['festivalPeriod'] ?? '';
+    final imageUrl = festival['imageUrl'] as String?;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey[300]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: imageUrl != null && imageUrl.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.event, size: 32, color: Colors.grey);
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        );
+                      },
+                    ),
+                  )
+                : const Icon(Icons.event, size: 32, color: Colors.grey),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                if (festivalPeriod.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    festivalPeriod,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 8),
                 Text(
                   description,
@@ -1716,6 +1961,175 @@ class _FullResultScreenState extends State<FullResultScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildSpotCardFromFirebase(Map<String, dynamic> location) {
+    final name = location['name'] ?? 'Unknown Location';
+    final province = location['province'] ?? '';
+    final region = location['region'] ?? '';
+    final description = location['description'] ?? '';
+    final imageUrl = location['imageUrl'] as String?;
+    final googleMapLink = location['googleMapLink'] as String?;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Full image at top (no border, full width)
+          Container(
+            width: double.infinity,
+            height: 180,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+            ),
+            child: imageUrl != null && imageUrl.isNotEmpty
+                ? Image.network(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                        child: Icon(Icons.place, size: 48, color: Colors.grey),
+                      );
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  )
+                : const Center(
+                    child: Icon(Icons.place, size: 48, color: Colors.grey),
+                  ),
+          ),
+          // Orange row with name and location
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            color: const Color(0xFFEB521A),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (province.isNotEmpty) ...[
+                  const SizedBox(width: 8),
+                  Text(
+                    province,
+                    style: const TextStyle(fontSize: 12, color: Colors.white),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          // Description
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              description,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[700],
+                height: 1.5,
+              ),
+            ),
+          ),
+          // Dash line divider
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: CustomPaint(
+              painter: DashedLinePainter(),
+              size: const Size(double.infinity, 1),
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Last section with map icon, area text, and View Map button
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                const Icon(Icons.map, size: 20, color: Colors.grey),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    region.isNotEmpty ? region : province,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => googleMapLink != null && googleMapLink.isNotEmpty
+                      ? _openGoogleMapLink(googleMapLink)
+                      : _openLocation(name, province),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEB521A),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      'View Map',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  // Open Google Maps link directly
+  Future<void> _openGoogleMapLink(String googleMapLink) async {
+    try {
+      final uri = Uri.parse(googleMapLink);
+
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error opening maps: $e')));
+      }
+    }
   }
 
   Widget _buildHighlightItem(String text) {
