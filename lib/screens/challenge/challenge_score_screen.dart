@@ -127,37 +127,42 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
     final backgroundImage = getChallengeBackgroundImage(widget.characterName);
     final percentage = (widget.score / widget.totalQuestions * 100).round();
     final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth > 400 ? 400.0 : screenWidth - 48;
+    final constrainedWidth = screenWidth > 430 ? 430.0 : screenWidth;
+    final cardWidth = constrainedWidth > 400 ? 400.0 : (constrainedWidth - 48).toDouble();
     final cardHeight = cardWidth * 16 / 9; // 9:16 aspect ratio
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          image: DecorationImage(
-            image: AssetImage(backgroundImage),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: SizedBox(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Container(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight:
-                      MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
-                      MediaQuery.of(context).padding.bottom,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              image: DecorationImage(
+                image: AssetImage(backgroundImage),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(
+              child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight:
+                          MediaQuery.of(context).size.height -
+                          MediaQuery.of(context).padding.top -
+                          MediaQuery.of(context).padding.bottom,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                       // Result card container with Stack for floating share button
                       Stack(
                         children: [
@@ -407,6 +412,8 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
           ),
         ),
       ),
+    ),
+    ),
     );
   }
 

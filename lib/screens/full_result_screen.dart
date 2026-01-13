@@ -964,15 +964,17 @@ class _FullResultScreenState extends State<FullResultScreen> {
     final backgroundImage = getChallengeBackgroundImage(widget.characterName);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFCEF),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Container(
+            color: const Color(0xFFFDFCEF),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                   // Top Character Introduction Section with Background
                   Stack(
                     children: [
@@ -1502,6 +1504,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 

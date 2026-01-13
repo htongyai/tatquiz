@@ -64,59 +64,65 @@ class _LoadingScreenState extends State<LoadingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/Background_Red.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 400),
-              padding: const EdgeInsets.all(40),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Train image
-                  Image.asset(
-                    'assets/Train_loading.png',
-                    width: 500,
-                    height: 80,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  const SizedBox(height: 10),
-                  // Loading text
-                  Text(
-                    AppLocalizations.findingYourTravelSpirit,
-                    style: GoogleFonts.courgette(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                      height: 1.2,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  // Progress bar
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: LinearProgressIndicator(
-                          value: _animationController.value,
-                          minHeight: 12,
-                          backgroundColor: Colors.white.withOpacity(0.3),
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                            Color(0xFFEB8C1A),
-                          ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/Background_Red.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  padding: const EdgeInsets.all(40),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Train image
+                      Image.asset(
+                        'assets/Train_loading.png',
+                        width: 500,
+                        height: 80,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      const SizedBox(height: 10),
+                      // Loading text
+                      Text(
+                        AppLocalizations.findingYourTravelSpirit,
+                        style: GoogleFonts.courgette(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                          height: 1.2,
                         ),
-                      );
-                    },
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 32),
+                      // Progress bar
+                      AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: LinearProgressIndicator(
+                              value: _animationController.value,
+                              minHeight: 12,
+                              backgroundColor: Colors.white.withOpacity(0.3),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFFEB8C1A),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

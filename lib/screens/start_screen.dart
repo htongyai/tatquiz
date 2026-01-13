@@ -150,117 +150,123 @@ class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/Background_home.jpg'),
-            fit: BoxFit.cover,
-            alignment: Alignment.bottomCenter,
-          ),
-        ),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              Center(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 400),
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      Stack(
-                        alignment: Alignment.topCenter,
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/Background_home.jpg'),
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomCenter,
+              ),
+            ),
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          // Info layer image
-                          Image.asset(
-                            'assets/Info layer2.png',
-                            width: double.infinity,
-                            fit: BoxFit.contain,
-                          ),
-                          // Button positioned inside the ticket
-                          Positioned(
-                            bottom: 60,
-                            left: 40,
-                            right: 40,
-                            child: SizedBox(
-                              height: 56,
-                              child: ElevatedButton(
-                                onPressed: _onStartJourney,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF00477A),
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(28),
-                                    side: const BorderSide(
-                                      color: Color(0xFFF39C21),
-                                      width: 3,
+                          const SizedBox(height: 10),
+                          Stack(
+                            alignment: Alignment.topCenter,
+                            children: [
+                              // Info layer image
+                              Image.asset(
+                                'assets/Info layer2.png',
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
+                              // Button positioned inside the ticket
+                              Positioned(
+                                bottom: 60,
+                                left: 40,
+                                right: 40,
+                                child: SizedBox(
+                                  height: 56,
+                                  child: ElevatedButton(
+                                    onPressed: _onStartJourney,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF00477A),
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(28),
+                                        side: const BorderSide(
+                                          color: Color(0xFFF39C21),
+                                          width: 3,
+                                        ),
+                                      ),
+                                      elevation: 4,
                                     ),
-                                  ),
-                                  elevation: 4,
-                                ),
-                                child: Text(
-                                  AppLocalizations.startJourney,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.5,
+                                    child: Text(
+                                      AppLocalizations.startJourney,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
+                          const SizedBox(height: 24),
+                          const Spacer(),
                         ],
-                      ),
-                      const SizedBox(height: 24),
-                      const Spacer(),
-                    ],
-                  ),
-                ),
-              ),
-              // Globe icon for language selector (always visible)
-              Positioned(
-                top: 20,
-                right: 20,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: _showLanguageSelector,
-                    borderRadius: BorderRadius.circular(25),
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        //color: Colors.white.withOpacity(0.9),
-                        shape: BoxShape.circle,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.black.withOpacity(0.2),
-                        //     blurRadius: 8,
-                        //     offset: const Offset(0, 2),
-                        //   ),
-                        //],
-                      ),
-                      child: const Icon(
-                        Icons.language,
-                        size: 18,
-                        color: Color(0xFF00477A),
                       ),
                     ),
                   ),
-                ),
-              ),
-              // Language selector (debug only - kept for backward compatibility)
-              if (debugLanguage)
-                Positioned(
-                  top: 70,
-                  right: 20,
-                  child: LanguageSelector(
-                    onLanguageChanged: () {
-                      setState(() {});
-                    },
+                  // Globe icon for language selector (always visible)
+                  Positioned(
+                    top: 20,
+                    right: 20,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: _showLanguageSelector,
+                        borderRadius: BorderRadius.circular(25),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            //color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.black.withOpacity(0.2),
+                            //     blurRadius: 8,
+                            //     offset: const Offset(0, 2),
+                            //   ),
+                            //],
+                          ),
+                          child: const Icon(
+                            Icons.language,
+                            size: 18,
+                            color: Color(0xFF00477A),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-            ],
+                  // Language selector (debug only - kept for backward compatibility)
+                  if (debugLanguage)
+                    Positioned(
+                      top: 70,
+                      right: 20,
+                      child: LanguageSelector(
+                        onLanguageChanged: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

@@ -350,126 +350,132 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/Background_Red.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 400),
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    AppLocalizations.almostThere,
-                    style: GoogleFonts.courgette(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    AppLocalizations.tellUsAboutYou,
-                    style: GoogleFonts.courgette(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 18),
-                  _buildDropdown(
-                    label: AppLocalizations.gender,
-                    hint: AppLocalizations.selectGender,
-                    value: selectedGender,
-                    items: genders,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedGender = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 14),
-                  _buildDropdown(
-                    label: AppLocalizations.age,
-                    hint: AppLocalizations.selectYourAge,
-                    value: selectedAge,
-                    items: ageGroups,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedAge = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 14),
-                  _buildDropdown(
-                    label: AppLocalizations.nationality,
-                    hint: AppLocalizations.selectNationality,
-                    value: selectedNationality,
-                    items: nationalities,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedNationality = value;
-                      });
-                    },
-                  ),
-                  // const Spacer(),
-                  SizedBox(height: 30),
-                  Container(
-                    width: double.infinity,
-                    height: 46,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: isFormValid
-                            ? const Color(
-                                0xFFF39C21,
-                              ) // Yellow border when active
-                            : Colors.grey[500]!, // Grey border when inactive
-                        width: 3,
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: isFormValid ? _submitForm : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFEB521A),
-                        foregroundColor: Colors.white,
-                        disabledBackgroundColor: Colors.grey[400],
-                        disabledForegroundColor: Colors.white,
-                        elevation: 0,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: _isSubmitting
-                          ? const SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : Text(
-                        AppLocalizations.getMyResult,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/Background_Red.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      Text(
+                        AppLocalizations.almostThere,
+                        style: GoogleFonts.courgette(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w400,
                           color: Colors.white,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      const SizedBox(height: 8),
+                      Text(
+                        AppLocalizations.tellUsAboutYou,
+                        style: GoogleFonts.courgette(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 18),
+                      _buildDropdown(
+                        label: AppLocalizations.gender,
+                        hint: AppLocalizations.selectGender,
+                        value: selectedGender,
+                        items: genders,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedGender = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      _buildDropdown(
+                        label: AppLocalizations.age,
+                        hint: AppLocalizations.selectYourAge,
+                        value: selectedAge,
+                        items: ageGroups,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedAge = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 14),
+                      _buildDropdown(
+                        label: AppLocalizations.nationality,
+                        hint: AppLocalizations.selectNationality,
+                        value: selectedNationality,
+                        items: nationalities,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedNationality = value;
+                          });
+                        },
+                      ),
+                      // const Spacer(),
+                      SizedBox(height: 30),
+                      Container(
+                        width: double.infinity,
+                        height: 46,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: isFormValid
+                                ? const Color(
+                                    0xFFF39C21,
+                                  ) // Yellow border when active
+                                : Colors.grey[500]!, // Grey border when inactive
+                            width: 3,
+                          ),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: isFormValid ? _submitForm : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFEB521A),
+                            foregroundColor: Colors.white,
+                            disabledBackgroundColor: Colors.grey[400],
+                            disabledForegroundColor: Colors.white,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: _isSubmitting
+                              ? const SizedBox(
+                                  height: 24,
+                                  width: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Text(
+                          AppLocalizations.getMyResult,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        ),
+                      ),
+                      //const SizedBox(height: 40),
+                    ],
                   ),
-                  //const SizedBox(height: 40),
-                ],
+                ),
               ),
             ),
           ),

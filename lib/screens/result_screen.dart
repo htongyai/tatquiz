@@ -198,8 +198,10 @@ class _ResultScreenState extends State<ResultScreen> {
     var size = MediaQuery.of(context).size;
     final screenWidth = size.width;
 
-    // Card width = screen width - 40px horizontal padding (20px each side)
-    final double cardWidth = screenWidth - 40;
+    // Card width = constrained width - 40px horizontal padding (20px each side)
+    // Use min of screenWidth and 430 for the frame
+    final double constrainedWidth = screenWidth > 430 ? 430 : screenWidth;
+    final double cardWidth = constrainedWidth - 40;
     // Card height maintains 9:16 aspect ratio
     final double cardHeight = cardWidth * 16 / 9;
 
@@ -221,341 +223,347 @@ class _ResultScreenState extends State<ResultScreen> {
         secondRowImageWidth * 80 / 136; // 136:80 aspect ratio
 
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background and scrollable content
-          Container(
-            height: size.height,
-            width: size.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/Background_Red.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Top header section
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 20,
-                      left: 20,
-                      right: 20,
-                    ),
-                    child: Column(
-                      children: [
-                        // Top row with export icon, TAT logo, and challenge icon
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Export icon - same size as challenge icon
-                              Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFDFCEF),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: IconButton(
-                                  onPressed: _saveAndShareImage,
-                                  icon: Icon(
-                                    Icons.ios_share,
-                                    color: Colors.grey[700],
-                                    size: 24,
-                                  ),
-                                  padding: EdgeInsets.zero,
-                                ),
-                              ),
-                              // TAT logo centered between buttons
-                              Expanded(
-                                child: Center(
-                                  child: Image.asset(
-                                    'assets/logo_tat.png',
-                                    height: 70,
-                                    fit: BoxFit.contain,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const SizedBox.shrink();
-                                    },
-                                  ),
-                                ),
-                              ),
-                              // Trophy icon - navigates to challenge
-                              GestureDetector(
-                                onTap: () async {
-                                  if (_isLoadingChallenge) return;
-
-                                  setState(() {
-                                    _isLoadingChallenge = true;
-                                  });
-
-                                  // Track challenge attempt in background (don't wait)
-                                  FirebaseService()
-                                      .trackChallengeAttempt()
-                                      .catchError((e) {
-                                        print(
-                                          'Error tracking challenge attempt: $e',
-                                        );
-                                      });
-
-                                  // Navigate immediately
-                                  if (mounted) {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChallengeIntroScreen(
-                                              characterName:
-                                                  widget.characterName,
-                                            ),
-                                      ),
-                                    );
-
-                                    if (mounted) {
-                                      setState(() {
-                                        _isLoadingChallenge = false;
-                                      });
-                                    }
-                                  }
-                                },
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Container(
-                                      width: 60,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFFDFCEF),
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: _isLoadingChallenge
-                                            ? const SizedBox(
-                                                width: 24,
-                                                height: 24,
-                                                child: CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                        Color
-                                                      >(Color(0xFF8B1538)),
-                                                ),
-                                              )
-                                            : SvgPicture.asset(
-                                                'assets/challenge_asset/icon_award.svg',
-                                                width: 32,
-                                                height: 32,
-                                              ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Stack(
+            children: [
+              // Background and scrollable content
+              Container(
+                height: size.height,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/Background_Red.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // Top header section
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 20,
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: Column(
+                          children: [
+                            // Top row with export icon, TAT logo, and challenge icon
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Export icon - same size as challenge icon
+                                  Container(
+                                    width: 60,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFFDFCEF),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        // Title text below
-                        Text(
-                          AppLocalizations.yourTourismPersonalityIs,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Character image card with fixed 9:16 aspect ratio
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Stack(
-                      children: [
-                        // RepaintBoundary for screenshot capture - includes card and overlays
-                        RepaintBoundary(
-                          key: _cardKey,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              width: cardWidth,
-                              height: cardHeight,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(characterImage),
-                                  fit: BoxFit
-                                      .fill, // Use fill to ensure image always fills the card
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                              child: Stack(
-                                children: [
-                                  // Top Spots for You section overlay
-                                  // Positioned at 58% from top of card to align below "Top Spots for You" text
-                                  // This percentage ensures images align correctly regardless of card size
-                                  Positioned(
-                                    top: cardHeight * 0.58,
-                                    left: 0,
-                                    right: 0,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: horizontalPadding,
+                                    child: IconButton(
+                                      onPressed: _saveAndShareImage,
+                                      icon: Icon(
+                                        Icons.ios_share,
+                                        color: Colors.grey[700],
+                                        size: 24,
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          // Three image spots horizontally (1:1 aspect ratio)
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              _buildSpotBox(
-                                                firstRowImageSize,
-                                                firstRowImageSize,
-                                                _topSpotImages.isNotEmpty
-                                                    ? _topSpotImages[0]
-                                                    : null,
-                                                'assets/top1.png',
-                                              ),
-                                              _buildSpotBox(
-                                                firstRowImageSize,
-                                                firstRowImageSize,
-                                                _topSpotImages.length > 1
-                                                    ? _topSpotImages[1]
-                                                    : null,
-                                                'assets/top2.png',
-                                              ),
-                                              _buildSpotBox(
-                                                firstRowImageSize,
-                                                firstRowImageSize,
-                                                _topSpotImages.length > 2
-                                                    ? _topSpotImages[2]
-                                                    : null,
-                                                'assets/top3.png',
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: cardHeight * 0.09,
-                                          ), // 6% of card height
-                                          // Local Dish and Thai Festival row (136:80 aspect ratio)
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              _buildDishBox(
-                                                secondRowImageWidth,
-                                                secondRowImageHeight,
-                                                _dishImage,
-                                                'assets/dish.png',
-                                              ),
-                                              _buildDishBox(
-                                                secondRowImageWidth,
-                                                secondRowImageHeight,
-                                                _festivalImage,
-                                                'assets/fest.png',
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                  ),
+                                  // TAT logo centered between buttons
+                                  Expanded(
+                                    child: Center(
+                                      child: Image.asset(
+                                        'assets/logo_tat.png',
+                                        height: 70,
+                                        fit: BoxFit.contain,
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return const SizedBox.shrink();
+                                        },
                                       ),
+                                    ),
+                                  ),
+                                  // Trophy icon - navigates to challenge
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (_isLoadingChallenge) return;
+
+                                      setState(() {
+                                        _isLoadingChallenge = true;
+                                      });
+
+                                      // Track challenge attempt in background (don't wait)
+                                      FirebaseService()
+                                          .trackChallengeAttempt()
+                                          .catchError((e) {
+                                            print(
+                                              'Error tracking challenge attempt: $e',
+                                            );
+                                          });
+
+                                      // Navigate immediately
+                                      if (mounted) {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChallengeIntroScreen(
+                                                  characterName:
+                                                      widget.characterName,
+                                                ),
+                                          ),
+                                        );
+
+                                        if (mounted) {
+                                          setState(() {
+                                            _isLoadingChallenge = false;
+                                          });
+                                        }
+                                      }
+                                    },
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Container(
+                                          width: 60,
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFFDFCEF),
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: _isLoadingChallenge
+                                                ? const SizedBox(
+                                                    width: 24,
+                                                    height: 24,
+                                                    child: CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                            Color
+                                                          >(Color(0xFF8B1538)),
+                                                    ),
+                                                  )
+                                                : SvgPicture.asset(
+                                                    'assets/challenge_asset/icon_award.svg',
+                                                    width: 32,
+                                                    height: 32,
+                                                  ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 12),
+                            // Title text below
+                            Text(
+                              AppLocalizations.yourTourismPersonalityIs,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // Character image card with fixed 9:16 aspect ratio
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Stack(
+                          children: [
+                            // RepaintBoundary for screenshot capture - includes card and overlays
+                            RepaintBoundary(
+                              key: _cardKey,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: cardWidth,
+                                  height: cardHeight,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(characterImage),
+                                      fit: BoxFit
+                                          .fill, // Use fill to ensure image always fills the card
+                                      alignment: Alignment.center,
+                                    ),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      // Top Spots for You section overlay
+                                      // Positioned at 58% from top of card to align below "Top Spots for You" text
+                                      // This percentage ensures images align correctly regardless of card size
+                                      Positioned(
+                                        top: cardHeight * 0.58,
+                                        left: 0,
+                                        right: 0,
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: horizontalPadding,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // Three image spots horizontally (1:1 aspect ratio)
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  _buildSpotBox(
+                                                    firstRowImageSize,
+                                                    firstRowImageSize,
+                                                    _topSpotImages.isNotEmpty
+                                                        ? _topSpotImages[0]
+                                                        : null,
+                                                    'assets/top1.png',
+                                                  ),
+                                                  _buildSpotBox(
+                                                    firstRowImageSize,
+                                                    firstRowImageSize,
+                                                    _topSpotImages.length > 1
+                                                        ? _topSpotImages[1]
+                                                        : null,
+                                                    'assets/top2.png',
+                                                  ),
+                                                  _buildSpotBox(
+                                                    firstRowImageSize,
+                                                    firstRowImageSize,
+                                                    _topSpotImages.length > 2
+                                                        ? _topSpotImages[2]
+                                                        : null,
+                                                    'assets/top3.png',
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: cardHeight * 0.09,
+                                              ), // 6% of card height
+                                              // Local Dish and Thai Festival row (136:80 aspect ratio)
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  _buildDishBox(
+                                                    secondRowImageWidth,
+                                                    secondRowImageHeight,
+                                                    _dishImage,
+                                                    'assets/dish.png',
+                                                  ),
+                                                  _buildDishBox(
+                                                    secondRowImageWidth,
+                                                    secondRowImageHeight,
+                                                    _festivalImage,
+                                                    'assets/fest.png',
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Bottom padding to account for floating button
+                      const SizedBox(height: 100),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Floating bottom button (doesn't scroll)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        const Color(0xFF8B1538).withOpacity(0),
+                        const Color(0xFF8B1538),
                       ],
                     ),
                   ),
-
-                  // Bottom padding to account for floating button
-                  const SizedBox(height: 100),
-                ],
-              ),
-            ),
-          ),
-
-          // Floating bottom button (doesn't scroll)
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    const Color(0xFF8B1538).withOpacity(0),
-                    const Color(0xFF8B1538),
-                  ],
-                ),
-              ),
-              child: SafeArea(
-                top: false,
-                child: Container(
-                  height: 56,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      color: const Color(0xFFF39C21),
-                      width: 3,
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FullResultScreen(
-                            characterName: widget.characterName,
-                            userAge: widget.userAge,
-                            userInterest: widget.userInterest,
-                            onShareImage: _captureWidget,
+                  child: SafeArea(
+                    top: false,
+                    child: Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(
+                          color: const Color(0xFFF39C21),
+                          width: 3,
+                        ),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FullResultScreen(
+                                characterName: widget.characterName,
+                                userAge: widget.userAge,
+                                userInterest: widget.userInterest,
+                                onShareImage: _captureWidget,
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFEB521A),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFEB521A),
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(
-                      AppLocalizations.viewFullResult,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        child: Text(
+                          AppLocalizations.viewFullResult,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

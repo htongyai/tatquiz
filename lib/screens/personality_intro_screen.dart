@@ -83,129 +83,135 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/Background_Red.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              Column(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 430),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/Background_Red.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(
+              child: Stack(
                 children: [
-                  const SizedBox(height: 40),
-                  // Title
-                  Text(
-                    AppLocalizations.howToPlay,
-                    style: GoogleFonts.courgette(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  // Progress indicator
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
                     children: [
-                      _buildProgressDot(0, true),
-                      _buildProgressLine(0),
-                      _buildProgressDot(1, true),
-                      _buildProgressLine(1),
-                      _buildProgressDot(2, false),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  // Scrollable cards
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: 3,
-                      physics: const BouncingScrollPhysics(),
-                      onPageChanged: (index) {
-                        // Reset auto-slide timer when user manually changes page
-                        _resetAutoSlide();
-                      },
-                      itemBuilder: (context, index) {
-                        final images = [
-                          'assets/step1.png',
-                          'assets/step2.png',
-                          'assets/step3.png',
-                        ];
-                        return GestureDetector(
-                          onPanDown: (_) {
-                            // Stop auto-slide when user starts dragging
-                            _stopAutoSlide();
-                          },
-                          onPanEnd: (_) {
-                            // Resume auto-slide after dragging ends
+                      const SizedBox(height: 40),
+                      // Title
+                      Text(
+                        AppLocalizations.howToPlay,
+                        style: GoogleFonts.courgette(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      // Progress indicator
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildProgressDot(0, true),
+                          _buildProgressLine(0),
+                          _buildProgressDot(1, true),
+                          _buildProgressLine(1),
+                          _buildProgressDot(2, false),
+                        ],
+                      ),
+                      const SizedBox(height: 40),
+                      // Scrollable cards
+                      Expanded(
+                        child: PageView.builder(
+                          controller: _pageController,
+                          itemCount: 3,
+                          physics: const BouncingScrollPhysics(),
+                          onPageChanged: (index) {
+                            // Reset auto-slide timer when user manually changes page
                             _resetAutoSlide();
                           },
-                          child: _buildStepImage(images[index], index),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  // Begin Quiz button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 56,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Log quiz started
-                          FirebaseService().logQuizStarted();
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const QuizQuestionScreen(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFEB521A),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28),
-                            side: const BorderSide(
-                              color: Color(0xFFF39C21),
-                              width: 3,
-                            ),
-                          ),
-                          elevation: 6,
-                          shadowColor: Colors.black.withOpacity(0.3),
+                          itemBuilder: (context, index) {
+                            final images = [
+                              'assets/step1.png',
+                              'assets/step2.png',
+                              'assets/step3.png',
+                            ];
+                            return GestureDetector(
+                              onPanDown: (_) {
+                                // Stop auto-slide when user starts dragging
+                                _stopAutoSlide();
+                              },
+                              onPanEnd: (_) {
+                                // Resume auto-slide after dragging ends
+                                _resetAutoSlide();
+                              },
+                              child: _buildStepImage(images[index], index),
+                            );
+                          },
                         ),
-                        child: Text(
-                          AppLocalizations.beginQuiz,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.5,
+                      ),
+                      const SizedBox(height: 40),
+                      // Begin Quiz button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Log quiz started
+                              FirebaseService().logQuizStarted();
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const QuizQuestionScreen(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFEB521A),
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(28),
+                                side: const BorderSide(
+                                  color: Color(0xFFF39C21),
+                                  width: 3,
+                                ),
+                              ),
+                              elevation: 6,
+                              shadowColor: Colors.black.withOpacity(0.3),
+                            ),
+                            child: Text(
+                              AppLocalizations.beginQuiz,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 40),
+                    ],
                   ),
-                  const SizedBox(height: 40),
+                  // Language selector (debug only)
+                  if (debugLanguage)
+                    Positioned(
+                      top: 20,
+                      right: 20,
+                      child: LanguageSelector(
+                        onLanguageChanged: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
                 ],
               ),
-              // Language selector (debug only)
-              if (debugLanguage)
-                Positioned(
-                  top: 20,
-                  right: 20,
-                  child: LanguageSelector(
-                    onLanguageChanged: () {
-                      setState(() {});
-                    },
-                  ),
-                ),
-            ],
+            ),
           ),
         ),
       ),
