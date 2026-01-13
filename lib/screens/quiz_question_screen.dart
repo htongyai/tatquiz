@@ -31,7 +31,7 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
     // Preload all quiz background images once, so switching questions is instant
     WidgetsBinding.instance.addPostFrameCallback((_) {
       for (int i = 1; i <= quizQuestions.length; i++) {
-        precacheImage(AssetImage('assets/Background_Q$i.jpg'), context);
+        precacheImage(AssetImage('assets/Background_Q$i.webp'), context);
       }
     });
   }
@@ -69,7 +69,7 @@ class _QuizQuestionScreenState extends State<QuizQuestionScreen> {
   @override
   Widget build(BuildContext context) {
     final question = quizQuestions[currentQuestion];
-    final backgroundImage = 'assets/Background_Q${currentQuestion + 1}.jpg';
+    final backgroundImage = 'assets/Background_Q${currentQuestion + 1}.webp';
 
     // Define text colors for each question based on background
     final List<Color> questionTextColors = [

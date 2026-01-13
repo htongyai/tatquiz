@@ -53,7 +53,7 @@ class _LoadingScreenState extends State<LoadingScreen>
 
     // Precache loading screen's own assets immediately
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      precacheImage(const AssetImage('assets/Background_Red.jpg'), context);
+      precacheImage(const AssetImage('assets/Background_Red.webp'), context);
       precacheImage(const AssetImage('assets/Train_loading.png'), context);
       // Start preloading all assets for result screen after context is ready
       _preloadAllAssets();
@@ -106,16 +106,16 @@ class _LoadingScreenState extends State<LoadingScreen>
     // Return character-specific image with language suffix
     switch (characterName) {
       case 'Chai':
-        return 'assets/Chai Result $languageSuffix.jpg';
+        return 'assets/Chai Result $languageSuffix.webp';
       case 'Chang-Noi':
-        return 'assets/Chang noi Result $languageSuffix.jpg';
+        return 'assets/Chang noi Result $languageSuffix.webp';
       case 'Ping':
-        return 'assets/Ping result $languageSuffix.jpg';
+        return 'assets/Ping result $languageSuffix.webp';
       case 'Pla-Kad':
-        return 'assets/Pla kad result $languageSuffix.jpg';
+        return 'assets/Pla kad result $languageSuffix.webp';
       case 'Mali':
       default:
-        return 'assets/Mali Result $languageSuffix.jpg';
+        return 'assets/Mali Result $languageSuffix.webp';
     }
   }
 
@@ -253,7 +253,7 @@ class _LoadingScreenState extends State<LoadingScreen>
 
       // Task 4: Preload background image (60% progress)
       _updateProgress(0.6);
-      await precacheImage(const AssetImage('assets/Background_Red.jpg'), context);
+      await precacheImage(const AssetImage('assets/Background_Red.webp'), context);
 
       // Task 5: Preload Firebase network images (80% progress when done)
       _updateProgress(0.7);
@@ -390,7 +390,7 @@ class _LoadingScreenState extends State<LoadingScreen>
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/Background_Red.jpg'),
+                image: AssetImage('assets/Background_Red.webp'),
                 fit: BoxFit.cover,
               ),
             ),

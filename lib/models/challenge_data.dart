@@ -80,26 +80,26 @@ Color getChallengeBackgroundColor(String character) {
 /// Get background image path for challenge screens based on character.
 /// 
 /// The images live under `assets/challenge_asset/` and are named:
-/// - background_challenge_mali.jpg
-/// - background_challenge_changnoi.jpg
-/// - background_challenge_ping.jpg
-/// - background_challenge_chai.jpg
-/// - background_challenge_plakad.jpg
+/// - background_challenge_mali.webp
+/// - background_challenge_changnoi.webp
+/// - background_challenge_ping.webp
+/// - background_challenge_chai.webp
+/// - background_challenge_plakad.webp
 /// 
 String getChallengeBackgroundImage(String character) {
   switch (character) {
     case 'Mali':
-      return 'assets/challenge_asset/background_challenge_mali.jpg';
+      return 'assets/challenge_asset/background_challenge_mali.webp';
     case 'Chang-Noi':
-      return 'assets/challenge_asset/background_challenge_changnoi.jpg';
+      return 'assets/challenge_asset/background_challenge_changnoi.webp';
     case 'Ping':
-      return 'assets/challenge_asset/background_challenge_ping.jpg';
+      return 'assets/challenge_asset/background_challenge_ping.webp';
     case 'Chai':
-      return 'assets/challenge_asset/background_challenge_chai.jpg';
+      return 'assets/challenge_asset/background_challenge_chai.webp';
     case 'Pla-Kad':
-      return 'assets/challenge_asset/background_challenge_plakad.jpg';
+      return 'assets/challenge_asset/background_challenge_plakad.webp';
     default:
-      return 'assets/challenge_asset/background_challenge_mali.jpg';
+      return 'assets/challenge_asset/background_challenge_mali.webp';
   }
 }
 

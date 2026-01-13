@@ -45,7 +45,7 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
     // Preload all images for instant display
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Precache background image for this screen
-      precacheImage(const AssetImage('assets/Background_Red.jpg'), context);
+      precacheImage(const AssetImage('assets/Background_Red.webp'), context);
       // Precache tutorial step images
       precacheImage(const AssetImage('assets/step1.png'), context);
       precacheImage(const AssetImage('assets/step2.png'), context);
@@ -54,7 +54,7 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
       precacheImage(const AssetImage('assets/indi.png'), context);
       // Preload all quiz backgrounds while user is on the intro screen
       for (int i = 1; i <= quizQuestions.length; i++) {
-        final image = AssetImage('assets/Background_Q$i.jpg');
+        final image = AssetImage('assets/Background_Q$i.webp');
         precacheImage(image, context);
       }
     });
@@ -99,7 +99,7 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/Background_Red.jpg'),
+                image: AssetImage('assets/Background_Red.webp'),
                 fit: BoxFit.cover,
               ),
             ),

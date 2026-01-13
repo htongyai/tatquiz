@@ -357,7 +357,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/Background_Red.jpg'),
+                image: AssetImage('assets/Background_Red.webp'),
                 fit: BoxFit.cover,
               ),
             ),

@@ -28,7 +28,7 @@ class _StartScreenState extends State<StartScreen> {
     _authenticateInBackground();
     // Precache background and UI images for instant loading
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      precacheImage(const AssetImage('assets/Background_home.jpg'), context);
+      precacheImage(const AssetImage('assets/Background_home.webp'), context);
       precacheImage(const AssetImage('assets/Info layer2.png'), context);
       // Preload images for next screen (personality_intro_screen) in background
       _preloadNextScreenImages();
@@ -37,14 +37,14 @@ class _StartScreenState extends State<StartScreen> {
 
   void _preloadNextScreenImages() {
     // Preload personality_intro_screen images in background (non-blocking)
-    precacheImage(const AssetImage('assets/Background_Red.jpg'), context);
+    precacheImage(const AssetImage('assets/Background_Red.webp'), context);
     precacheImage(const AssetImage('assets/step1.png'), context);
     precacheImage(const AssetImage('assets/step2.png'), context);
     precacheImage(const AssetImage('assets/step3.png'), context);
     precacheImage(const AssetImage('assets/indi.png'), context);
     // Preload all quiz backgrounds (non-blocking, will continue in background)
     for (int i = 1; i <= quizQuestions.length; i++) {
-      final image = AssetImage('assets/Background_Q$i.jpg');
+      final image = AssetImage('assets/Background_Q$i.webp');
       precacheImage(image, context).catchError((e) {
         // Silently handle errors, continue preloading others
       });
@@ -161,7 +161,7 @@ class _StartScreenState extends State<StartScreen> {
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/Background_home.jpg'),
+                image: AssetImage('assets/Background_home.webp'),
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomCenter,
               ),

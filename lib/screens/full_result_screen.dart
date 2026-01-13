@@ -265,7 +265,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
       case 'Mali':
         return {
           'name': 'Siamese Cat (Wichien Maat)',
-          'image': 'assets/Character/Mali/Siamese Cat.jpg',
+          'image': 'assets/Character/Mali/Siamese Cat.webp',
           'description':
               'Born in ancient Siam\'s royal courts, this elegant cat with sapphire-blue eyes was believed to bring fortune and protect sacred temples. Once, only nobles could own them. Now, the Siamese cat carries Thai grace across the world, its calm gaze telling stories of faith, beauty, and friendship.',
         };
@@ -300,7 +300,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
       default:
         return {
           'name': 'Siamese Cat',
-          'image': 'assets/Character/Mali/Siamese Cat.jpg',
+          'image': 'assets/Character/Mali/Siamese Cat.webp',
           'description': 'An elegant cat representing Thai grace and beauty.',
         };
     }
@@ -977,6 +977,7 @@ class _FullResultScreenState extends State<FullResultScreen> {
                   children: [
                   // Top Character Introduction Section with Background
                   Stack(
+                    clipBehavior: Clip.none,
                     children: [
                       // Character image section
                       Container(
@@ -1035,13 +1036,13 @@ class _FullResultScreenState extends State<FullResultScreen> {
                           },
                         ),
                       ),
-                      // Rounded corner overlay at the bottom
+                      // Rounded corner overlay at the bottom - extends slightly below to eliminate gap
                       Positioned(
                         left: 0,
                         right: 0,
-                        bottom: 0,
+                        bottom: -1,
                         child: Container(
-                          height: 30,
+                          height: 31,
                           decoration: const BoxDecoration(
                             color: Color(0xFFFDFCEF),
                             borderRadius: BorderRadius.only(
