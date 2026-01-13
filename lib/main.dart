@@ -5,7 +5,9 @@ import 'screens/start_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const TravelQuizApp());
 }
 
@@ -23,46 +25,6 @@ class TravelQuizApp extends StatelessWidget {
       ),
       home: const StartScreen(),
       debugShowCheckedModeBanner: false,
-      builder: (context, child) {
-        // Wrap all screens with responsive wrapper
-        return ResponsiveWrapper(child: child ?? const SizedBox());
-      },
-    );
-  }
-}
-
-/// Wrapper that constrains the app to mobile phone aspect ratio
-class ResponsiveWrapper extends StatelessWidget {
-  final Widget child;
-
-  const ResponsiveWrapper({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: const Color(0xFF2C2C2C), // Dark grey background for sides
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 430, // Max phone width (iPhone 14 Pro Max width)
-          ),
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 20,
-                  spreadRadius: 5,
-                ),
-              ],
-            ),
-            child: child,
-          ),
-        ),
-      ),
     );
   }
 }

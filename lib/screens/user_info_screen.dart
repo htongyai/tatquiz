@@ -253,16 +253,16 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
       if (mounted) {
         // Navigate to loading screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoadingScreen(
-            characterScores: widget.characterScores,
-            userAge: selectedAge!,
-            userInterest: selectedGender!,
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoadingScreen(
+              characterScores: widget.characterScores,
+              userAge: selectedAge!,
+              userInterest: selectedGender!,
+            ),
           ),
-        ),
-      );
+        );
       }
     } catch (e) {
       print('Error submitting form: $e');
@@ -459,13 +459,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                               ),
                             )
                           : Text(
-                        AppLocalizations.getMyResult,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
+                              AppLocalizations.getMyResult,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                   //const SizedBox(height: 40),
