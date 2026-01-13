@@ -2000,7 +2000,8 @@ class _FullResultScreenState extends State<FullResultScreen> {
   }
 
   Widget _buildSpotCardFromFirebase(Map<String, dynamic> location) {
-    final name = location['destinationName'] ?? location['name'] ?? 'Unknown Location';
+    final name =
+        location['destinationName'] ?? location['name'] ?? 'Unknown Location';
     final province = location['province'] ?? '';
     final region = location['region'] ?? '';
     final description = location['description'] ?? '';
