@@ -62,29 +62,29 @@ class _FullResultScreenState extends State<FullResultScreen> {
 
       // Fetch locations (limit to 5)
       final locationsSnapshot = await firestore
-          .collection(countryCode)
-          .doc(characterBackendId)
-          .collection('content')
-          .doc('locations')
+          .collection('characters')
+          .doc(countryCode)
+          .collection(characterBackendId)
+          .doc('content')
           .collection('locations')
           .limit(5)
           .get();
 
       // Fetch foods
       final foodsSnapshot = await firestore
-          .collection(countryCode)
-          .doc(characterBackendId)
-          .collection('content')
-          .doc('foodMatches')
+          .collection('characters')
+          .doc(countryCode)
+          .collection(characterBackendId)
+          .doc('content')
           .collection('foodMatches')
           .get();
 
       // Fetch festivals
       final festivalsSnapshot = await firestore
-          .collection(countryCode)
-          .doc(characterBackendId)
-          .collection('content')
-          .doc('festivalFits')
+          .collection('characters')
+          .doc(countryCode)
+          .collection(characterBackendId)
+          .doc('content')
           .collection('festivalFits')
           .get();
 
@@ -1640,7 +1640,8 @@ class _FullResultScreenState extends State<FullResultScreen> {
   }
 
   Widget _buildFoodCardFromFirebase(Map<String, dynamic> food) {
-    final name = food['name'] ?? 'Unknown Food';
+    final name = food['name'] ?? food['foodStyle'] ?? 'Unknown Food';
+    final foodStyle = food['foodStyle'] ?? '';
     final description = food['description'] ?? '';
     final imageUrl = food['imageUrl'] as String?;
 
@@ -1999,10 +2000,11 @@ class _FullResultScreenState extends State<FullResultScreen> {
   }
 
   Widget _buildSpotCardFromFirebase(Map<String, dynamic> location) {
-    final name = location['name'] ?? 'Unknown Location';
+    final name = location['destinationName'] ?? location['name'] ?? 'Unknown Location';
     final province = location['province'] ?? '';
     final region = location['region'] ?? '';
     final description = location['description'] ?? '';
+    final highlight = location['highlight'] ?? '';
     final imageUrl = location['imageUrl'] as String?;
     final googleMapLink = location['googleMapLink'] as String?;
 
