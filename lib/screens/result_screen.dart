@@ -233,12 +233,9 @@ class _ResultScreenState extends State<ResultScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Center(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 428),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
                   // Top header section
                   Padding(
                     padding: const EdgeInsets.only(
