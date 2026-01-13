@@ -42,8 +42,17 @@ class _PersonalityIntroScreenState extends State<PersonalityIntroScreen> {
     // Start auto-slide timer
     _startAutoSlide();
 
-    // Preload all quiz backgrounds while user is on the intro screen
+    // Preload all images for instant display
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Precache background image for this screen
+      precacheImage(const AssetImage('assets/Background_Red.jpg'), context);
+      // Precache tutorial step images
+      precacheImage(const AssetImage('assets/step1.png'), context);
+      precacheImage(const AssetImage('assets/step2.png'), context);
+      precacheImage(const AssetImage('assets/step3.png'), context);
+      // Precache progress indicator image
+      precacheImage(const AssetImage('assets/indi.png'), context);
+      // Preload all quiz backgrounds while user is on the intro screen
       for (int i = 1; i <= quizQuestions.length; i++) {
         final image = AssetImage('assets/Background_Q$i.jpg');
         precacheImage(image, context);

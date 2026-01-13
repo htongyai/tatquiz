@@ -5,6 +5,7 @@ import '../config/app_localizations.dart';
 import '../config/language_config.dart';
 import '../widgets/language_selector.dart';
 import '../services/firebase_service.dart';
+import '../models/quiz_data.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -25,6 +26,29 @@ class _StartScreenState extends State<StartScreen> {
     _firebaseService.logScreenView(screenName: 'start_screen');
     // Start authentication in background
     _authenticateInBackground();
+    // Precache background and UI images for instant loading
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      precacheImage(const AssetImage('assets/Background_home.jpg'), context);
+      precacheImage(const AssetImage('assets/Info layer2.png'), context);
+      // Preload images for next screen (personality_intro_screen) in background
+      _preloadNextScreenImages();
+    });
+  }
+
+  void _preloadNextScreenImages() {
+    // Preload personality_intro_screen images in background (non-blocking)
+    precacheImage(const AssetImage('assets/Background_Red.jpg'), context);
+    precacheImage(const AssetImage('assets/step1.png'), context);
+    precacheImage(const AssetImage('assets/step2.png'), context);
+    precacheImage(const AssetImage('assets/step3.png'), context);
+    precacheImage(const AssetImage('assets/indi.png'), context);
+    // Preload all quiz backgrounds (non-blocking, will continue in background)
+    for (int i = 1; i <= quizQuestions.length; i++) {
+      final image = AssetImage('assets/Background_Q$i.jpg');
+      precacheImage(image, context).catchError((e) {
+        // Silently handle errors, continue preloading others
+      });
+    }
   }
 
   void _showLanguageSelector() {
@@ -105,45 +129,25 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   Future<void> _onStartJourney() async {
-    // If auth is still in progress, wait for it
-    if (_isAuthenticating && !_authCompleted) {
-      print('Waiting for background authentication to complete...');
-      // Wait up to 3 seconds for auth to complete
-      int attempts = 0;
-      while (_isAuthenticating && attempts < 30) {
-        await Future.delayed(const Duration(milliseconds: 100));
-        attempts++;
-      }
-    }
-
-    // If auth failed or didn't complete, try again
-    if (!_authCompleted) {
-      print('Retrying authentication...');
-      try {
-        final userCredential = await FirebaseAuth.instance.signInAnonymously();
-        print('Signed in anonymously: ${userCredential.user?.uid}');
-        await _firebaseService.createUserSession(country: 'Unknown');
-        _authCompleted = true;
-      } catch (e) {
-        print('Error signing in: $e');
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Failed to start: $e'),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-        }
-      }
-    }
-
-    // Navigate to next screen
+    // Navigate immediately - don't wait for anything
     if (mounted) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const PersonalityIntroScreen()),
       );
+    }
+
+    // Continue authentication in background (non-blocking)
+    if (!_authCompleted && !_isAuthenticating) {
+      _authenticateInBackground().catchError((e) {
+        print('Background auth error: $e');
+        // Retry once in background
+        Future.delayed(const Duration(seconds: 1), () {
+          if (mounted && !_authCompleted) {
+            _authenticateInBackground();
+          }
+        });
+      });
     }
   }
 

@@ -68,17 +68,17 @@ flutter:
   assets:
     - assets/
     - assets/challenge_asset/
-    - assets/ Character/
-    - assets/ Character/Mali/
-    - assets/ Character/Mali/Icon Activities/
-    - assets/ Character/Chai/
-    - assets/ Character/Chai/Icon Activities/
-    - assets/ Character/Ping/
-    - assets/ Character/Ping/Icon Activities/
-    - assets/ Character/Chang noi/
-    - assets/ Character/Chang noi/Icon Activities/
-    - assets/ Character/Pla kad/
-    - assets/ Character/Pla kad/Icon Activities/
+    - assets/Character/
+    - assets/Character/Mali/
+    - assets/Character/Mali/Icon Activities/
+    - assets/Character/Chai/
+    - assets/Character/Chai/Icon Activities/
+    - assets/Character/Ping/
+    - assets/Character/Ping/Icon Activities/
+    - assets/Character/Chang noi/
+    - assets/Character/Chang noi/Icon Activities/
+    - assets/Character/Pla kad/
+    - assets/Character/Pla kad/Icon Activities/
     - assets/character_profiles/
 
 

@@ -265,42 +265,42 @@ class _FullResultScreenState extends State<FullResultScreen> {
       case 'Mali':
         return {
           'name': 'Siamese Cat (Wichien Maat)',
-          'image': 'assets/ Character/Mali/Siamese Cat.jpg',
+          'image': 'assets/Character/Mali/Siamese Cat.jpg',
           'description':
               'Born in ancient Siam\'s royal courts, this elegant cat with sapphire-blue eyes was believed to bring fortune and protect sacred temples. Once, only nobles could own them. Now, the Siamese cat carries Thai grace across the world, its calm gaze telling stories of faith, beauty, and friendship.',
         };
       case 'Chai':
         return {
           'name': 'Buffalo',
-          'image': 'assets/ Character/Chai/Buffalo.png',
+          'image': 'assets/Character/Chai/Buffalo.png',
           'description':
               'Before machines, it was the water buffalo that plowed Thai rice fields, sharing sweat and soil with farmers through generations. It represents gratitude, patience, and humble strength.',
         };
       case 'Chang-Noi':
         return {
           'name': 'Elephant',
-          'image': 'assets/ Character/Chang noi/Elephant.png',
+          'image': 'assets/Character/Chang noi/Elephant.png',
           'description':
               'The elephant, Thailand\'s national symbol, historically used in royal ceremonies and cultural rituals. They have long been companions of Thai life. Today, elephants became symbols of wisdom, loyalty, and strength and be reminders of Thailand\'s heart: powerful yet kind.',
         };
       case 'Ping':
         return {
           'name': 'Dugong',
-          'image': 'assets/ Character/Ping/Dugong.png',
+          'image': 'assets/Character/Ping/Dugong.png',
           'description':
               'The dugong, Thailand\'s "sea cow," lives peacefully along the Andaman coast. It\'s gentle, curious, and loved as a symbol of marine conservation and the charm of Thai islands.',
         };
       case 'Pla-Kad':
         return {
           'name': 'Betta Fish',
-          'image': 'assets/ Character/Pla kad/Betta Fish.png',
+          'image': 'assets/Character/Pla kad/Betta Fish.png',
           'description':
               'Thailand\'s national aquatic treasure, the betta fish, is admired worldwide for its vibrant colors, graceful fins, and fighting spirit. It represents both Thai artistry and the country\'s ability to blend tradition with modern sophistication.',
         };
       default:
         return {
           'name': 'Siamese Cat',
-          'image': 'assets/ Character/Mali/Siamese Cat.jpg',
+          'image': 'assets/Character/Mali/Siamese Cat.jpg',
           'description': 'An elegant cat representing Thai grace and beauty.',
         };
     }
@@ -312,57 +312,57 @@ class _FullResultScreenState extends State<FullResultScreen> {
         return [
           {
             'label': 'Café Hopping',
-            'icon': 'assets/ Character/Mali/Icon Activities/CafeHopping.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/CafeHopping.svg',
           },
           {
             'label': 'Art Walk',
-            'icon': 'assets/ Character/Mali/Icon Activities/Art Walk.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Art Walk.svg',
           },
           {
             'label': 'Boutique Stay',
-            'icon': 'assets/ Character/Mali/Icon Activities/Boutique Stay.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Boutique Stay.svg',
           },
           {
             'label': 'Contemporary Festivals',
             'icon':
-                'assets/ Character/Mali/Icon Activities/Contemporary Festivals.svg',
+                'assets/Character/Mali/Icon Activities/Contemporary Festivals.svg',
           },
           {
             'label': 'Rooftop Dining',
-            'icon': 'assets/ Character/Mali/Icon Activities/Rooftop Dining.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Rooftop Dining.svg',
           },
           {
             'label': 'Fashion/Design Market',
-            'icon': 'assets/ Character/Mali/Icon Activities/Design Market.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Design Market.svg',
           },
         ];
       case 'Chai':
         return [
           {
             'label': 'Homestay',
-            'icon': 'assets/ Character/Chai/icon Activities/Homestay.svg',
+            'icon': 'assets/Character/Chai/icon Activities/Homestay.svg',
           },
           {
             'label': 'Mindfulness',
-            'icon': 'assets/ Character/Chai/icon Activities/Mindfulness.svg',
+            'icon': 'assets/Character/Chai/icon Activities/Mindfulness.svg',
           },
           {
             'label': 'Farm Walk',
-            'icon': 'assets/ Character/Chai/icon Activities/Farm Walk.svg',
+            'icon': 'assets/Character/Chai/icon Activities/Farm Walk.svg',
           },
           {
             'label': 'Market Breakfast',
             'icon':
-                'assets/ Character/Chai/icon Activities/Market Breakfast.svg',
+                'assets/Character/Chai/icon Activities/Market Breakfast.svg',
           },
           {
             'label': 'Reading by River',
             'icon':
-                'assets/ Character/Chai/icon Activities/Reading by River.svg',
+                'assets/Character/Chai/icon Activities/Reading by River.svg',
           },
           {
             'label': 'Soft Adventure',
-            'icon': 'assets/ Character/Chai/icon Activities/Soft Adventure.svg',
+            'icon': 'assets/Character/Chai/icon Activities/Soft Adventure.svg',
           },
         ];
       case 'Chang-Noi':
@@ -370,115 +370,115 @@ class _FullResultScreenState extends State<FullResultScreen> {
           {
             'label': 'Heritage Temple Tour',
             'icon':
-                'assets/ Character/Chang noi/icon Activities/Heritage Temple Tour.svg',
+                'assets/Character/Chang noi/icon Activities/Heritage Temple Tour.svg',
           },
           {
             'label': 'Local Market',
             'icon':
-                'assets/ Character/Chang noi/icon Activities/Local Market.svg',
+                'assets/Character/Chang noi/icon Activities/Local Market.svg',
           },
           {
             'label': 'Craft Workshop',
             'icon':
-                'assets/ Character/Chang noi/icon Activities/Craft Workshop.svg',
+                'assets/Character/Chang noi/icon Activities/Craft Workshop.svg',
           },
           {
             'label': 'Vintage Souvenir',
             'icon':
-                'assets/ Character/Chang noi/icon Activities/Vintage Souvenir.svg',
+                'assets/Character/Chang noi/icon Activities/Vintage Souvenir.svg',
           },
           {
             'label': 'Cooking Class',
             'icon':
-                'assets/ Character/Chang noi/icon Activities/Cooking Class.svg',
+                'assets/Character/Chang noi/icon Activities/Cooking Class.svg',
           },
           {
             'label': 'Traditional Festival',
             'icon':
-                'assets/ Character/Chang noi/icon Activities/Traditional Festival.svg',
+                'assets/Character/Chang noi/icon Activities/Traditional Festival.svg',
           },
         ];
       case 'Ping':
         return [
           {
             'label': 'Snorkeling',
-            'icon': 'assets/ Character/Ping/Icon Activities/Snorkeling.svg',
+            'icon': 'assets/Character/Ping/Icon Activities/Snorkeling.svg',
           },
           {
             'label': 'Kayaking',
-            'icon': 'assets/ Character/Ping/Icon Activities/Kayaking.svg',
+            'icon': 'assets/Character/Ping/Icon Activities/Kayaking.svg',
           },
           {
             'label': 'Beach Bonfire',
-            'icon': 'assets/ Character/Ping/Icon Activities/Beach Bonfire.svg',
+            'icon': 'assets/Character/Ping/Icon Activities/Beach Bonfire.svg',
           },
           {
             'label': 'Coastal Ride',
-            'icon': 'assets/ Character/Ping/Icon Activities/Coastal Ride.svg',
+            'icon': 'assets/Character/Ping/Icon Activities/Coastal Ride.svg',
           },
           {
             'label': 'Diving Trip',
-            'icon': 'assets/ Character/Ping/Icon Activities/Diving Trip.svg',
+            'icon': 'assets/Character/Ping/Icon Activities/Diving Trip.svg',
           },
           {
             'label': 'Seafood Hunt',
-            'icon': 'assets/ Character/Ping/Icon Activities/Seafood Hunt.svg',
+            'icon': 'assets/Character/Ping/Icon Activities/Seafood Hunt.svg',
           },
         ];
       case 'Pla-Kad':
         return [
           {
             'label': 'Luxury Spa/\nWellness Retreat',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Luxury Spa.svg',
+            'icon': 'assets/Character/Pla kad/Icon Activities/Luxury Spa.svg',
           },
           {
             'label': 'Fine Dining',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Fine Dining.svg',
+            'icon': 'assets/Character/Pla kad/Icon Activities/Fine Dining.svg',
           },
           {
             'label': 'Art Gallery',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Art Gallery.svg',
+            'icon': 'assets/Character/Pla kad/Icon Activities/Art Gallery.svg',
           },
           {
             'label': 'Beachfront Resort',
             'icon':
-                'assets/ Character/Pla kad/Icon Activities/Beachfront Resort.svg',
+                'assets/Character/Pla kad/Icon Activities/Beachfront Resort.svg',
           },
           {
             'label': 'Fashion',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Fashion.svg',
+            'icon': 'assets/Character/Pla kad/Icon Activities/Fashion.svg',
           },
           {
             'label': 'Festivals',
-            'icon': 'assets/ Character/Pla kad/Icon Activities/Festivals.svg',
+            'icon': 'assets/Character/Pla kad/Icon Activities/Festivals.svg',
           },
         ];
       default:
         return [
           {
             'label': 'Café Hopping',
-            'icon': 'assets/ Character/Mali/Icon Activities/CafeHopping.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/CafeHopping.svg',
           },
           {
             'label': 'Art Walk',
-            'icon': 'assets/ Character/Mali/Icon Activities/Art Walk.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Art Walk.svg',
           },
           {
             'label': 'Boutique Stay',
-            'icon': 'assets/ Character/Mali/Icon Activities/Boutique Stay.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Boutique Stay.svg',
           },
           {
             'label': 'Contemporary Festivals',
             'icon':
-                'assets/ Character/Mali/Icon Activities/Contemporary Festivals.svg',
+                'assets/Character/Mali/Icon Activities/Contemporary Festivals.svg',
           },
           {
             'label': 'Rooftop Dining',
-            'icon': 'assets/ Character/Mali/Icon Activities/Rooftop Dining.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Rooftop Dining.svg',
           },
           {
             'label': 'Fashion/Design Market',
-            'icon': 'assets/ Character/Mali/Icon Activities/Design Market.svg',
+            'icon': 'assets/Character/Mali/Icon Activities/Design Market.svg',
           },
         ];
     }

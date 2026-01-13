@@ -20,12 +20,18 @@ class ResultScreen extends StatefulWidget {
   final String characterName;
   final String userAge;
   final String userInterest;
+  final List<String>? preloadedTopSpotImages;
+  final String? preloadedDishImage;
+  final String? preloadedFestivalImage;
 
   const ResultScreen({
     super.key,
     required this.characterName,
     required this.userAge,
     required this.userInterest,
+    this.preloadedTopSpotImages,
+    this.preloadedDishImage,
+    this.preloadedFestivalImage,
   });
 
   @override
@@ -45,8 +51,23 @@ class _ResultScreenState extends State<ResultScreen> {
     super.initState();
     // Log screen view
     FirebaseService().logScreenView(screenName: 'result_screen');
-    // Fetch Firebase data
-    _fetchFirebaseImages();
+    
+    // Use preloaded Firebase images if available (from LoadingScreen)
+    // These images are already precached, so they'll load instantly
+    if (widget.preloadedTopSpotImages != null ||
+        widget.preloadedDishImage != null ||
+        widget.preloadedFestivalImage != null) {
+      setState(() {
+        // Use preloaded Firebase image URLs (already precached in LoadingScreen)
+        _topSpotImages = widget.preloadedTopSpotImages ?? [];
+        _dishImage = widget.preloadedDishImage;
+        _festivalImage = widget.preloadedFestivalImage;
+        _isLoadingData = false;
+      });
+    } else {
+      // Fallback: fetch Firebase images if not preloaded (shouldn't happen in normal flow)
+      _fetchFirebaseImages();
+    }
   }
 
   Future<void> _fetchFirebaseImages() async {
@@ -619,9 +640,11 @@ class _ResultScreenState extends State<ResultScreen> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
+        // Use Firebase image URL (preloaded in LoadingScreen, so loads from cache instantly)
+        // Falls back to asset image only if Firebase URL is null/empty or fails to load
         child: firebaseImageUrl != null && firebaseImageUrl.isNotEmpty
             ? Image.network(
-                firebaseImageUrl,
+                firebaseImageUrl, // Firebase image URL (precached)
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(fallbackAsset, fit: BoxFit.cover);
@@ -660,9 +683,11 @@ class _ResultScreenState extends State<ResultScreen> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
+        // Use Firebase image URL (preloaded in LoadingScreen, so loads from cache instantly)
+        // Falls back to asset image only if Firebase URL is null/empty or fails to load
         child: firebaseImageUrl != null && firebaseImageUrl.isNotEmpty
             ? Image.network(
-                firebaseImageUrl,
+                firebaseImageUrl, // Firebase image URL (precached)
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(fallbackAsset, fit: BoxFit.cover);
