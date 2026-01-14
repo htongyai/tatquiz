@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/challenge_data.dart';
 import 'challenge_score_screen.dart';
 import 'challenge_feedback_popup.dart';
+import '../../config/app_localizations.dart';
 
 /// Challenge Quiz Screen
 ///
@@ -119,9 +120,14 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                               Column(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 12.0),
+                                    padding: const EdgeInsets.only(
+                                      bottom: 12.0,
+                                    ),
                                     child: Text(
-                                      'Question ${currentQuestion + 1} of ${questions.length}',
+                                      AppLocalizations.questionOf(
+                                        currentQuestion + 1,
+                                        questions.length,
+                                      ),
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -143,7 +149,10 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                       alignment: Alignment.center,
                                       children: [
                                         // The horizontal line
-                                        Container(height: 2, color: indicatorColor),
+                                        Container(
+                                          height: 2,
+                                          color: indicatorColor,
+                                        ),
                                         // Dots evenly distributed
                                         Positioned.fill(
                                           child: Row(
@@ -169,16 +178,21 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                                         height: 22,
                                                         decoration: BoxDecoration(
                                                           color: Colors.white,
-                                                          shape: BoxShape.circle,
+                                                          shape:
+                                                              BoxShape.circle,
                                                           boxShadow: [
                                                             BoxShadow(
-                                                              color: Colors.black
-                                                                  .withOpacity(0.2),
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                    0.2,
+                                                                  ),
                                                               blurRadius: 4,
-                                                              offset: const Offset(
-                                                                0,
-                                                                2,
-                                                              ),
+                                                              offset:
+                                                                  const Offset(
+                                                                    0,
+                                                                    2,
+                                                                  ),
                                                             ),
                                                           ],
                                                         ),
@@ -206,13 +220,16 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                               // Content with max width constraint
                               Center(
                                 child: Container(
-                                  constraints: const BoxConstraints(maxWidth: 400),
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 400,
+                                  ),
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 20,
                                     vertical: 2,
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       const SizedBox(height: 12),
                                       // Question text
@@ -255,7 +272,10 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [backgroundColor.withOpacity(0), backgroundColor],
+                          colors: [
+                            backgroundColor.withOpacity(0),
+                            backgroundColor,
+                          ],
                         ),
                       ),
                       child: Center(
@@ -280,18 +300,21 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                     decoration: BoxDecoration(
                                       color:
                                           hasAnswered &&
-                                              userAnswers[currentQuestion] == true
+                                              userAnswers[currentQuestion] ==
+                                                  true
                                           ? const Color(0xFF1E4A7A)
                                           : const Color(0xFFFFFBF5),
                                       border: Border.all(
                                         color:
                                             hasAnswered &&
-                                                userAnswers[currentQuestion] == true
+                                                userAnswers[currentQuestion] ==
+                                                    true
                                             ? const Color(0xFF1E4A7A)
                                             : const Color(0xFF1E4A7A),
                                         width:
                                             hasAnswered &&
-                                                userAnswers[currentQuestion] == true
+                                                userAnswers[currentQuestion] ==
+                                                    true
                                             ? 0
                                             : 2,
                                       ),
@@ -314,7 +337,7 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        'True',
+                                        AppLocalizations.trueAnswer,
                                         style: TextStyle(
                                           fontSize: 16,
                                           color:
@@ -346,18 +369,21 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                   decoration: BoxDecoration(
                                     color:
                                         hasAnswered &&
-                                            userAnswers[currentQuestion] == false
+                                            userAnswers[currentQuestion] ==
+                                                false
                                         ? const Color(0xFF1E4A7A)
                                         : const Color(0xFFFFFBF5),
                                     border: Border.all(
                                       color:
                                           hasAnswered &&
-                                              userAnswers[currentQuestion] == false
+                                              userAnswers[currentQuestion] ==
+                                                  false
                                           ? const Color(0xFF1E4A7A)
                                           : const Color(0xFF1E4A7A),
                                       width:
                                           hasAnswered &&
-                                              userAnswers[currentQuestion] == false
+                                              userAnswers[currentQuestion] ==
+                                                  false
                                           ? 0
                                           : 2,
                                     ),
@@ -380,7 +406,7 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'False',
+                                      AppLocalizations.falseAnswer,
                                       style: TextStyle(
                                         fontSize: 16,
                                         color:
@@ -407,7 +433,8 @@ class _ChallengeQuizScreenState extends State<ChallengeQuizScreen> {
                   if (_showFeedback)
                     ChallengeFeedbackPopup(
                       isCorrect:
-                          userAnswers[currentQuestion] == question.correctAnswer,
+                          userAnswers[currentQuestion] ==
+                          question.correctAnswer,
                       explanation: question.explanation,
                       onNext: _handleNext,
                     ),

@@ -537,31 +537,31 @@ class AppLocalizations {
         );
       case 'Chang-Noi':
         return getText(
-          english: 'the Heritage Guardian',
-          spanish: 'el Guardián del Patrimonio',
-          german: 'der Erbe-Wächter',
-          russian: 'хранитель наследия',
+          english: 'the Jumbo Elephant',
+          spanish: 'el Elefante Jumbo',
+          german: 'der Jumbo-Elefant',
+          russian: 'слон-гигант',
         );
       case 'Ping':
         return getText(
-          english: 'the Thrill Chaser',
-          spanish: 'el Cazador de Emociones',
-          german: 'der Nervenkitzel-Jäger',
-          russian: 'охотник за острыми ощущениями',
+          english: 'the Playful Dugong',
+          spanish: 'el Dugongo Juguetón',
+          german: 'der Verspielte Dugong',
+          russian: 'игривый дюгонь',
         );
       case 'Chai':
         return getText(
-          english: 'the Peaceful Soul',
-          spanish: 'el Alma Pacífica',
-          german: 'die Friedliche Seele',
-          russian: 'мирная душа',
+          english: 'the Chilled Buffalo',
+          spanish: 'el Búfalo Relajado',
+          german: 'der Entspannte Büffel',
+          russian: 'спокойный буйвол',
         );
       case 'Pla-Kad':
         return getText(
-          english: 'the Refined Traveler',
-          spanish: 'el Viajero Refinado',
-          german: 'der Raffinierte Reisende',
-          russian: 'изысканный путешественник',
+          english: 'the Elegant Betta Fish',
+          spanish: 'el Pez Betta Elegante',
+          german: 'der Elegante Kampffisch',
+          russian: 'элегантная рыбка бетта',
         );
       default:
         return getText(
@@ -705,5 +705,133 @@ class AppLocalizations {
     spanish: '#MiPersonalidadTailandesa #TailandiaIncreíble',
     german: '#MeineThaiPersönlichkeit #ErstaunlichesThailand',
     russian: '#МояТайскаяЛичность #УдивительныйТаиланд',
+  );
+
+  // ============================================
+  // CHALLENGE SCREENS
+  // ============================================
+  static String get howWellDoYouKnowThailand => getText(
+    english: 'How Well Do You Know Thailand?',
+    spanish: '¿Qué tan bien conoces Tailandia?',
+    german: 'Wie gut kennst du Thailand?',
+    russian: 'Насколько хорошо вы знаете Таиланд?',
+  );
+
+  static String get testYourThailandKnowledge => getText(
+    english:
+        'Test your Thailand knowledge with fun True - False questions and complete the challenge for a chance to win special gifts.',
+    spanish:
+        'Pon a prueba tus conocimientos sobre Tailandia con divertidas preguntas de Verdadero - Falso y completa el desafío para tener la oportunidad de ganar regalos especiales.',
+    german:
+        'Teste dein Thailand-Wissen mit lustigen Wahr-Falsch-Fragen und schließe die Herausforderung ab, um die Chance auf besondere Geschenke zu erhalten.',
+    russian:
+        'Проверьте свои знания о Таиланде с помощью веселых вопросов «Правда - Ложь» и выполните задание, чтобы получить шанс выиграть специальные подарки.',
+  );
+
+  static String get startChallenge => getText(
+    english: 'Start Challenge',
+    spanish: 'Iniciar Desafío',
+    german: 'Herausforderung Starten',
+    russian: 'Начать Задание',
+  );
+
+  static String get trueAnswer => getText(
+    english: 'True',
+    spanish: 'Verdadero',
+    german: 'Wahr',
+    russian: 'Правда',
+  );
+
+  static String get falseAnswer => getText(
+    english: 'False',
+    spanish: 'Falso',
+    german: 'Falsch',
+    russian: 'Ложь',
+  );
+
+  static String get basedOnYourTravelPersonality => getText(
+    english: 'Based on your travel personality',
+    spanish: 'Basado en tu personalidad viajera',
+    german: 'Basierend auf deiner Reisepersönlichkeit',
+    russian: 'Основано на вашей туристической личности',
+  );
+
+  static String get yourScoreIs => getText(
+    english: 'Your score is',
+    spanish: 'Tu puntuación es',
+    german: 'Deine Punktzahl ist',
+    russian: 'Ваш результат',
+  );
+
+  static String get backToMyResult => getText(
+    english: 'Back to My Result',
+    spanish: 'Volver a Mi Resultado',
+    german: 'Zurück zu Meinem Ergebnis',
+    russian: 'Вернуться к Моему Результату',
+  );
+
+  static String get thailandExpertMessage => getText(
+    english:
+        'Thailand Expert! You really know your stuff! Great job! Your answers show strong knowledge about Thailand\'s culture and travel gems.',
+    spanish:
+        '¡Experto en Tailandia! ¡Realmente sabes de lo que hablas! ¡Gran trabajo! Tus respuestas muestran un sólido conocimiento sobre la cultura y las joyas turísticas de Tailandia.',
+    german:
+        'Thailand-Experte! Du kennst dich wirklich aus! Großartige Arbeit! Deine Antworten zeigen fundiertes Wissen über Thailands Kultur und Reiseschätze.',
+    russian:
+        'Эксперт по Таиланду! Вы действительно разбираетесь в этом! Отличная работа! Ваши ответы показывают глубокие знания о культуре и туристических жемчужинах Таиланда.',
+  );
+
+  static String get goodKnowledgeMessage => getText(
+    english:
+        'Well done! You have good knowledge about Thailand. Keep exploring to learn more!',
+    spanish:
+        '¡Bien hecho! Tienes buenos conocimientos sobre Tailandia. ¡Sigue explorando para aprender más!',
+    german:
+        'Gut gemacht! Du hast gutes Wissen über Thailand. Erkunde weiter, um mehr zu erfahren!',
+    russian:
+        'Отлично! У вас хорошие знания о Таиланде. Продолжайте изучать, чтобы узнать больше!',
+  );
+
+  static String get goodTryMessage => getText(
+    english:
+        'Good try! There\'s always more to discover about Thailand. Try again to improve your score!',
+    spanish:
+        '¡Buen intento! Siempre hay más por descubrir sobre Tailandia. ¡Intenta de nuevo para mejorar tu puntuación!',
+    german:
+        'Guter Versuch! Es gibt immer mehr über Thailand zu entdecken. Versuche es erneut, um deine Punktzahl zu verbessern!',
+    russian:
+        'Хорошая попытка! О Таиланде всегда есть что узнать. Попробуйте еще раз, чтобы улучшить свой результат!',
+  );
+
+  static String get challengeHashtags => getText(
+    english:
+        'Thailand Challenge — how well do you know Thailand? #AmazingThailand #TravelPersonality',
+    spanish:
+        'Desafío Tailandia — ¿qué tan bien conoces Tailandia? #TailandiaIncreíble #PersonalidadViajera',
+    german:
+        'Thailand-Herausforderung — wie gut kennst du Thailand? #ErstaunlichesThailand #Reisepersönlichkeit',
+    russian:
+        'Тайское Задание — насколько хорошо вы знаете Таиланд? #УдивительныйТаиланд #ТуристическаяЛичность',
+  );
+
+  static String get greatJob => getText(
+    english: 'Great job!',
+    spanish: '¡Gran trabajo!',
+    german: 'Großartig!',
+    russian: 'Отлично!',
+  );
+
+  static String get notQuiteButKeepGoing => getText(
+    english: 'Not quite! But keep going!',
+    spanish: '¡No del todo! ¡Pero sigue adelante!',
+    german: 'Nicht ganz! Aber mach weiter!',
+    russian: 'Не совсем! Но продолжай!',
+  );
+
+  static String get next => getText(
+    english: 'Next',
+    spanish: 'Siguiente',
+    german: 'Weiter',
+    russian: 'Далее',
   );
 }

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../challenge/challenge_quiz_screen.dart';
 import '../../models/challenge_data.dart';
+import '../../config/app_localizations.dart';
 
 /// Challenge Intro Screen
 ///
@@ -83,7 +84,7 @@ class ChallengeIntroScreen extends StatelessWidget {
                           const SizedBox(height: 40),
                           // Subtitle
                           Text(
-                            'How Well Do You Know Thailand?',
+                            AppLocalizations.howWellDoYouKnowThailand,
                             style: GoogleFonts.courgette(
                               fontSize: 28,
                               fontWeight: FontWeight.w400,
@@ -101,7 +102,7 @@ class ChallengeIntroScreen extends StatelessWidget {
                           const SizedBox(height: 32),
                           // Description
                           Text(
-                            'Test your Thailand knowledge with fun True - False questions and complete the challenge for a chance to win special gifts.',
+                            AppLocalizations.testYourThailandKnowledge,
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white.withOpacity(0.95),
@@ -148,9 +149,9 @@ class ChallengeIntroScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(28),
                                   ),
                                 ),
-                                child: const Text(
-                                  'Start Challenge',
-                                  style: TextStyle(
+                                child: Text(
+                                  AppLocalizations.startChallenge,
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.5,

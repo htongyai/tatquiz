@@ -272,36 +272,498 @@ final Map<String, List<ChallengeQuestion>> _englishChallengeQuestions = {
 
 // ============================================
 // SPANISH CHALLENGE QUESTIONS
-// TODO: Add Spanish translations when provided
 // ============================================
 final Map<String, List<ChallengeQuestion>> _spanishChallengeQuestions = {
-  'Chang-Noi': _englishChallengeQuestions['Chang-Noi']!,
-  'Mali': _englishChallengeQuestions['Mali']!,
-  'Ping': _englishChallengeQuestions['Ping']!,
-  'Chai': _englishChallengeQuestions['Chai']!,
-  'Pla-Kad': _englishChallengeQuestions['Pla-Kad']!,
+  'Chang-Noi': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Los elefantes están profundamente conectados con la historia tailandesa y solían aparecer en ceremonias reales antiguas.',
+      correctAnswer: true,
+      explanation: 'Los elefantes simbolizan sabiduría, fuerza y herencia real en Tailandia.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Los visitantes deben vestirse con hombros y rodillas cubiertas al entrar a los templos tailandeses.',
+      correctAnswer: true,
+      explanation: 'La ropa modesta muestra respeto en espacios sagrados.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Las guirnaldas de flores tailandesas (phuang malai) se utilizan comúnmente como ofrendas en los santuarios.',
+      correctAnswer: true,
+      explanation: 'Las guirnaldas representan respeto, bendiciones y buenas intenciones.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'La mayoría de los templos tailandeses animan a los visitantes a cantar en voz alta al entrar.',
+      correctAnswer: false,
+      explanation: 'Los templos son espacios tranquilos; el silencio se considera respetuoso.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'El festival Songkran originalmente comenzó como una celebración real que se realizaba solo en palacios.',
+      correctAnswer: false,
+      explanation: 'Comenzó como una tradición comunitaria para limpiar, renovar y dar bendiciones.',
+    ),
+  ],
+  'Mali': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Se cree que los gatos siameses traen buena suerte en el folclore tailandés.',
+      correctAnswer: true,
+      explanation: 'El "Wichian Mat" es una de las razas de gatos patrimoniales de Tailandia.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'El té de guisante de mariposa obtiene su color azul-púrpura de forma natural.',
+      correctAnswer: true,
+      explanation: 'Está hecho de la flor dok anchan.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Ari es un barrio de Bangkok famoso por sus cafés y lugares de estilo de vida.',
+      correctAnswer: true,
+      explanation: 'Es conocido por calles tranquilas y cafés creativos con estilo.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'La mayoría de los cafés boutique tailandeses están decorados completamente con luces de neón.',
+      correctAnswer: false,
+      explanation: 'La cultura de café tailandesa se inclina hacia el diseño artesanal, acogedor y estético.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Las antiguas casas comerciales tailandesas se construyeron originalmente con una decoración mínima para la planificación urbana moderna.',
+      correctAnswer: false,
+      explanation: 'Se construyeron hace mucho tiempo con texturas de madera y encanto sino-tailandés.',
+    ),
+  ],
+  'Ping': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Los dugongos son mamíferos marinos gentiles que se encuentran en las aguas del sur de Tailandia.',
+      correctAnswer: true,
+      explanation: 'Especialmente cerca de Trang y la costa de Andamán.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Una buena práctica de snorkel es evitar tocar corales y animales marinos.',
+      correctAnswer: true,
+      explanation: 'Incluso un ligero contacto puede dañar ecosistemas frágiles.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'El Mar de Andamán es famoso por sus aguas turquesas y acantilados de piedra caliza.',
+      correctAnswer: true,
+      explanation: 'Esto es lo que hace icónicos a Krabi y Phuket.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Es seguro acercarse a las tortugas marinas de cerca mientras se hace snorkel.',
+      correctAnswer: false,
+      explanation: 'Las tortugas necesitan espacio para respirar y comportarse naturalmente.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Koh Tao es conocida principalmente por su vida nocturna y tiene pocos sitios de buceo.',
+      correctAnswer: false,
+      explanation: 'Es una de las principales capitales de buceo del mundo.',
+    ),
+  ],
+  'Chai': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Los búfalos de agua son símbolos de la vida campestre tailandesa y las tradiciones agrícolas.',
+      correctAnswer: true,
+      explanation: 'Son compañeros queridos en la cultura rural.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'El norte de Tailandia es conocido por sus terrazas de arroz pacíficas.',
+      correctAnswer: true,
+      explanation: 'Lugares como Mae Chaem y Chiang Mai son famosos por ellas.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Una compresa de hierbas en el bienestar tailandés se usa para relajar los músculos.',
+      correctAnswer: true,
+      explanation: 'Está llena de hierba de limón, lima kaffir, cúrcuma y hierbas.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Moo Krata es un postre tradicional tailandés.',
+      correctAnswer: false,
+      explanation: 'Es la icónica combinación tailandesa de BBQ y hotpot.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'El gesto wai tailandés se usa principalmente durante eventos deportivos.',
+      correctAnswer: false,
+      explanation: 'Su propósito es saludar, respetar y agradecer.',
+    ),
+  ],
+  'Pla-Kad': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Los peces betta son admirados en Tailandia por sus colores vibrantes y aletas elegantes.',
+      correctAnswer: true,
+      explanation: 'Se consideran arte viviente y un símbolo cultural tailandés.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Muchos restaurantes reconocidos por Michelin en Tailandia sirven interpretaciones modernas de platos tailandeses.',
+      correctAnswer: true,
+      explanation: 'La alta cocina tailandesa es respetada a nivel mundial.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'La seda tailandesa es famosa por su textura y acabado brillante tejido a mano.',
+      correctAnswer: true,
+      explanation: 'Especialmente Jim Thompson y los tejedores de Isaan.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Las cerámicas Benjarong generalmente vienen en un solo color sólido.',
+      correctAnswer: false,
+      explanation: 'Benjarong es conocida por sus elaborados patrones multicolores.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'El masaje tradicional tailandés utiliza principalmente aceites en lugar de técnicas de presión.',
+      correctAnswer: false,
+      explanation: 'El masaje tailandés se centra en estiramientos y presión profunda.',
+    ),
+  ],
 };
 
 // ============================================
 // GERMAN CHALLENGE QUESTIONS
-// TODO: Add German translations when provided
 // ============================================
 final Map<String, List<ChallengeQuestion>> _germanChallengeQuestions = {
-  'Chang-Noi': _englishChallengeQuestions['Chang-Noi']!,
-  'Mali': _englishChallengeQuestions['Mali']!,
-  'Ping': _englishChallengeQuestions['Ping']!,
-  'Chai': _englishChallengeQuestions['Chai']!,
-  'Pla-Kad': _englishChallengeQuestions['Pla-Kad']!,
+  'Chang-Noi': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Elefanten sind tief mit der thailändischen Geschichte verbunden und wurden in alten königlichen Zeremonien eingesetzt.',
+      correctAnswer: true,
+      explanation: 'Elefanten symbolisieren Weisheit, Stärke und königliches Erbe in Thailand.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Besucher sollten beim Betreten thailändischer Tempel Kleidung mit bedeckten Schultern und Knien tragen.',
+      correctAnswer: true,
+      explanation: 'Bescheidene Kleidung zeigt Respekt in heiligen Räumen.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Thailändische Blumengirlanden (phuang malai) werden häufig als Opfergaben an Schreinen verwendet.',
+      correctAnswer: true,
+      explanation: 'Girlanden repräsentieren Respekt, Segen und gute Absichten.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Die meisten thailändischen Tempel ermutigen Besucher, beim Betreten laut zu singen.',
+      correctAnswer: false,
+      explanation: 'Tempel sind ruhige Räume; Stille wird als respektvoll angesehen.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Das Songkran-Festival begann ursprünglich als königliche Feier, die nur in Palästen stattfand.',
+      correctAnswer: false,
+      explanation: 'Es begann als Gemeinschaftstradition zum Reinigen, Erneuern und Segnen.',
+    ),
+  ],
+  'Mali': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Siamkatzen sollen in der thailändischen Folklore Glück bringen.',
+      correctAnswer: true,
+      explanation: 'Die "Wichian Mat" ist eine der traditionellen Katzenrassen Thailands.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Schmetterlingserbsen-Tee erhält seine blau-violette Farbe auf natürliche Weise.',
+      correctAnswer: true,
+      explanation: 'Er wird aus der Dok Anchan Blume hergestellt.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Ari ist ein Bangkoker Viertel, das für Cafés und Lifestyle-Spots berühmt ist.',
+      correctAnswer: true,
+      explanation: 'Es ist bekannt für ruhige Straßen und stilvolle kreative Cafés.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Die meisten thailändischen Boutique-Cafés sind komplett mit Neonlichtern dekoriert.',
+      correctAnswer: false,
+      explanation: 'Die thailändische Café-Kultur tendiert zu handgefertigtem, gemütlichem und ästhetischem Design.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Alte thailändische Shophouses wurden ursprünglich mit minimaler Dekoration für moderne Stadtplanung gebaut.',
+      correctAnswer: false,
+      explanation: 'Sie wurden vor langer Zeit mit Holztexturen und sino-thailändischem Charme gebaut.',
+    ),
+  ],
+  'Ping': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Dugongs sind sanfte Meeressäugetiere, die in Thailands südlichen Gewässern zu finden sind.',
+      correctAnswer: true,
+      explanation: 'Besonders in der Nähe von Trang und der Andamanenküste.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Eine gute Schnorchel-Praxis ist es, Korallen und Meerestiere nicht zu berühren.',
+      correctAnswer: true,
+      explanation: 'Selbst leichter Kontakt kann empfindliche Ökosysteme schädigen.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Die Andamanensee ist berühmt für türkisfarbenes Wasser und Kalksteinfelsen.',
+      correctAnswer: true,
+      explanation: 'Das macht Krabi und Phuket ikonisch.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Es ist sicher, Meeresschildkröten beim Schnorcheln nahe zu kommen.',
+      correctAnswer: false,
+      explanation: 'Schildkröten brauchen Raum zum Atmen und für natürliches Verhalten.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Koh Tao ist hauptsächlich für sein Nachtleben bekannt und hat nur wenige Tauchplätze.',
+      correctAnswer: false,
+      explanation: 'Es ist eine der wichtigsten Tauchhauptstädte der Welt.',
+    ),
+  ],
+  'Chai': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Wasserbüffel sind Symbole des thailändischen Landlebens und der Agrartradition.',
+      correctAnswer: true,
+      explanation: 'Sie sind geliebte Begleiter in der ländlichen Kultur.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Nordthailand ist bekannt für friedliche Reisterrassen.',
+      correctAnswer: true,
+      explanation: 'Orte wie Mae Chaem und Chiang Mai sind dafür berühmt.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Eine Kräuterkompresse im thailändischen Wellness wird verwendet, um Muskeln zu entspannen.',
+      correctAnswer: true,
+      explanation: 'Sie ist gefüllt mit Zitronengras, Kaffir-Limette, Kurkuma und Kräutern.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Moo Krata ist ein traditionelles thailändisches Dessert.',
+      correctAnswer: false,
+      explanation: 'Es ist die ikonische thailändische BBQ-Hotpot-Kombination.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Die thailändische Wai-Geste wird hauptsächlich bei Sportveranstaltungen verwendet.',
+      correctAnswer: false,
+      explanation: 'Ihr Zweck ist Begrüßung, Respekt und Dankbarkeit.',
+    ),
+  ],
+  'Pla-Kad': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Kampffische werden in Thailand für ihre lebendigen Farben und eleganten Flossen bewundert.',
+      correctAnswer: true,
+      explanation: 'Sie gelten als lebende Kunst und thailändisches Kultursymbol.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Viele von Michelin anerkannte Restaurants in Thailand servieren moderne Interpretationen thailändischer Gerichte.',
+      correctAnswer: true,
+      explanation: 'Thailändische gehobene Küche ist weltweit respektiert.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Thailändische Seide ist berühmt für ihre Textur und ihr schimmerndes handgewebtes Finish.',
+      correctAnswer: true,
+      explanation: 'Besonders Jim Thompson und Isaan-Weber.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Benjarong-Keramik kommt normalerweise in einer einzigen Volltonfarbe.',
+      correctAnswer: false,
+      explanation: 'Benjarong ist bekannt für aufwendige mehrfarbige Muster.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Traditionelle thailändische Massage verwendet hauptsächlich Öle anstelle von Drucktechniken.',
+      correctAnswer: false,
+      explanation: 'Thailändische Massage konzentriert sich auf Dehnung und tiefen Druck.',
+    ),
+  ],
 };
 
 // ============================================
 // RUSSIAN CHALLENGE QUESTIONS
-// TODO: Add Russian translations when provided
 // ============================================
 final Map<String, List<ChallengeQuestion>> _russianChallengeQuestions = {
-  'Chang-Noi': _englishChallengeQuestions['Chang-Noi']!,
-  'Mali': _englishChallengeQuestions['Mali']!,
-  'Ping': _englishChallengeQuestions['Ping']!,
-  'Chai': _englishChallengeQuestions['Chai']!,
-  'Pla-Kad': _englishChallengeQuestions['Pla-Kad']!,
+  'Chang-Noi': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Слоны глубоко связаны с тайской историей и участвовали в древних королевских церемониях.',
+      correctAnswer: true,
+      explanation: 'Слоны символизируют мудрость, силу и королевское наследие в Таиланде.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Посетители должны одеваться с покрытыми плечами и коленями при входе в тайские храмы.',
+      correctAnswer: true,
+      explanation: 'Скромная одежда проявляет уважение в священных местах.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Тайские цветочные гирлянды (пуанг малай) обычно используются в качестве подношений в святилищах.',
+      correctAnswer: true,
+      explanation: 'Гирлянды представляют уважение, благословения и добрые намерения.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Большинство тайских храмов поощряют посетителей петь вслух при входе.',
+      correctAnswer: false,
+      explanation: 'Храмы — это тихие места; молчание считается уважительным.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Фестиваль Сонгкран первоначально начался как королевское празднование, проводимое только во дворцах.',
+      correctAnswer: false,
+      explanation: 'Он начался как общинная традиция для очищения, обновления и благословений.',
+    ),
+  ],
+  'Mali': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Считается, что сиамские кошки приносят удачу в тайском фольклоре.',
+      correctAnswer: true,
+      explanation: '«Вичиан Мат» — одна из наследственных пород кошек Таиланда.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Чай из мотылькового гороха получает свой сине-фиолетовый цвет естественным образом.',
+      correctAnswer: true,
+      explanation: 'Он сделан из цветка док анчан.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Ари — это район Бангкока, известный кафе и местами для стильной жизни.',
+      correctAnswer: true,
+      explanation: 'Он известен спокойными улицами и стильными творческими кафе.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Большинство тайских бутик-кафе полностью украшены неоновыми огнями.',
+      correctAnswer: false,
+      explanation: 'Тайская культура кафе склоняется к ручной работе, уютному и эстетическому дизайну.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Старые тайские магазины-дома изначально были построены с минимальной отделкой для современного городского планирования.',
+      correctAnswer: false,
+      explanation: 'Они были построены давно с деревянными текстурами и сино-тайским шармом.',
+    ),
+  ],
+  'Ping': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Дюгони — это нежные морские млекопитающие, обитающие в южных водах Таиланда.',
+      correctAnswer: true,
+      explanation: 'Особенно возле Транга и Андаманского побережья.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Хорошая практика снорклинга — избегать прикосновения к кораллам и морским животным.',
+      correctAnswer: true,
+      explanation: 'Даже легкий контакт может повредить хрупкие экосистемы.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Андаманское море знаменито бирюзовыми водами и известняковыми скалами.',
+      correctAnswer: true,
+      explanation: 'Это делает Краби и Пхукет знаковыми.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Безопасно подходить близко к морским черепахам во время снорклинга.',
+      correctAnswer: false,
+      explanation: 'Черепахам нужно пространство, чтобы дышать и вести себя естественно.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Ко Тао известен в основном ночной жизнью и имеет мало мест для дайвинга.',
+      correctAnswer: false,
+      explanation: 'Это одна из главных дайвинг-столиц мира.',
+    ),
+  ],
+  'Chai': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Водяные буйволы — символы тайской сельской жизни и сельскохозяйственных традиций.',
+      correctAnswer: true,
+      explanation: 'Они любимые спутники в сельской культуре.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Северный Таиланд известен мирными рисовыми террасами.',
+      correctAnswer: true,
+      explanation: 'Места, такие как Мае Чем и Чиангмай, знамениты ими.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Травяной компресс в тайском велнесе используется для расслабления мышц.',
+      correctAnswer: true,
+      explanation: 'Он наполнен лемонграссом, кафрским лаймом, куркумой и травами.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Му Крата — это традиционный тайский десерт.',
+      correctAnswer: false,
+      explanation: 'Это знаковая тайская комбинация BBQ и горячего горшка.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Тайский жест вай в основном используется на спортивных мероприятиях.',
+      correctAnswer: false,
+      explanation: 'Его цель — приветствие, уважение и благодарность.',
+    ),
+  ],
+  'Pla-Kad': [
+    ChallengeQuestion(
+      number: 1,
+      question: 'Рыбки бетта восхищают в Таиланде своими яркими цветами и элегантными плавниками.',
+      correctAnswer: true,
+      explanation: 'Они считаются живым искусством и тайским культурным символом.',
+    ),
+    ChallengeQuestion(
+      number: 2,
+      question: 'Многие рестораны, признанные Мишлен в Таиланде, подают современные интерпретации тайских блюд.',
+      correctAnswer: true,
+      explanation: 'Тайская высокая кухня уважается во всем мире.',
+    ),
+    ChallengeQuestion(
+      number: 3,
+      question: 'Тайский шелк славится своей текстурой и мерцающей ручной отделкой.',
+      correctAnswer: true,
+      explanation: 'Особенно Джим Томпсон и ткачи Исаана.',
+    ),
+    ChallengeQuestion(
+      number: 4,
+      question: 'Керамика Бенджаронг обычно имеет один сплошной цвет.',
+      correctAnswer: false,
+      explanation: 'Бенджаронг известен сложными многоцветными узорами.',
+    ),
+    ChallengeQuestion(
+      number: 5,
+      question: 'Традиционный тайский массаж в основном использует масла вместо техник давления.',
+      correctAnswer: false,
+      explanation: 'Тайский массаж фокусируется на растяжке и глубоком давлении.',
+    ),
+  ],
 };

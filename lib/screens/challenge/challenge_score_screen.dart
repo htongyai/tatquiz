@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/challenge_data.dart';
 import '../../services/firebase_service.dart';
+import '../../config/app_localizations.dart';
 
 // Conditional import for web
 import 'challenge_score_screen_stub.dart'
@@ -64,11 +65,11 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
   String _getScoreMessage() {
     final percentage = (widget.score / widget.totalQuestions * 100).round();
     if (percentage >= 80) {
-      return 'Thailand Expert! You really know your stuff! Great job! Your answers show strong knowledge about Thailand\'s culture and travel gems.';
+      return AppLocalizations.thailandExpertMessage;
     } else if (percentage >= 60) {
-      return 'Well done! You have good knowledge about Thailand. Keep exploring to learn more!';
+      return AppLocalizations.goodKnowledgeMessage;
     } else {
-      return 'Good try! There\'s always more to discover about Thailand. Try again to improve your score!';
+      return AppLocalizations.goodTryMessage;
     }
   }
 
@@ -199,7 +200,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                       children: [
                                         // "Based on your travel personality" text
                                         Text(
-                                          'Based on your travel personality',
+                                          AppLocalizations.basedOnYourTravelPersonality,
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Colors.grey[600],
@@ -210,7 +211,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                         const SizedBox(height: 8),
                                         // Character name
                                         Text(
-                                          '${widget.characterName} The ${_getCharacterSubtitle(widget.characterName)}',
+                                          '${widget.characterName} ${AppLocalizations.getCharacterSubtitle(widget.characterName)}',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w800,
@@ -221,7 +222,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                         const SizedBox(height: 32),
                                         // Score text
                                         Text(
-                                          'Your score is',
+                                          AppLocalizations.yourScoreIs,
                                           style: GoogleFonts.courgette(
                                             fontSize: 32,
                                             fontWeight: FontWeight.w400,
@@ -322,7 +323,7 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 20),
                                     child: Text(
-                                      'Thailand Challenge — how well do you know Thailand? #AmazingThailand #TravelPersonality',
+                                      AppLocalizations.challengeHashtags,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey[600],
@@ -393,9 +394,9 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
                                 borderRadius: BorderRadius.circular(28),
                               ),
                             ),
-                            child: const Text(
-                              'Back to My Result',
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.backToMyResult,
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 0.5,
@@ -415,22 +416,5 @@ class _ChallengeScoreScreenState extends State<ChallengeScoreScreen> {
     ),
     ),
     );
-  }
-
-  String _getCharacterSubtitle(String character) {
-    switch (character) {
-      case 'Mali':
-        return 'Chic Cat';
-      case 'Chang-Noi':
-        return 'Heritage Guardian';
-      case 'Ping':
-        return 'Thrill Chaser';
-      case 'Chai':
-        return 'Peaceful Soul';
-      case 'Pla-Kad':
-        return 'Refined Traveler';
-      default:
-        return 'Chic Cat';
-    }
   }
 }

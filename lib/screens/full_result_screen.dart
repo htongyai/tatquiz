@@ -209,9 +209,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         } else {
           if (mounted) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Could not open maps')),
+            );
           }
         }
       }
@@ -975,453 +975,503 @@ class _FullResultScreenState extends State<FullResultScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  // Top Character Introduction Section with Background
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      // Character image section
-                      Container(
-                        width: double.infinity,
-                        // Add padding at bottom for the overlap effect
-                        padding: const EdgeInsets.only(bottom: 30),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(backgroundImage),
+                    // Top Character Introduction Section with Background
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        // Character image section
+                        Container(
+                          width: double.infinity,
+                          // Add padding at bottom for the overlap effect
+                          padding: const EdgeInsets.only(bottom: 30),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(backgroundImage),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Image.asset(
+                            _getCharacterProfileImagePath(widget.characterName),
                             fit: BoxFit.cover,
+                            width: double.infinity,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Log the error for debugging
+                              print(
+                                'Error loading image: ${_getCharacterProfileImagePath(widget.characterName)}',
+                              );
+                              print('Error: $error');
+                              return Container(
+                                height: 400,
+                                color: Colors.white.withOpacity(0.2),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        profile.emoji,
+                                        style: const TextStyle(fontSize: 80),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        'Image not found',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        _getCharacterProfileImagePath(
+                                          widget.characterName,
+                                        ),
+                                        style: TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 12,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                        child: Image.asset(
-                          _getCharacterProfileImagePath(widget.characterName),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          errorBuilder: (context, error, stackTrace) {
-                            // Log the error for debugging
-                            print(
-                              'Error loading image: ${_getCharacterProfileImagePath(widget.characterName)}',
-                            );
-                            print('Error: $error');
-                            return Container(
-                              height: 400,
-                              color: Colors.white.withOpacity(0.2),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      profile.emoji,
-                                      style: const TextStyle(fontSize: 80),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      'Image not found',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      _getCharacterProfileImagePath(
-                                        widget.characterName,
-                                      ),
-                                      style: TextStyle(
-                                        color: Colors.white70,
-                                        fontSize: 12,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
+                        // Rounded corner overlay at the bottom - extends slightly below to eliminate gap
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: -1,
+                          child: Container(
+                            height: 31,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFFDFCEF),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                      // Rounded corner overlay at the bottom - extends slightly below to eliminate gap
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: -1,
-                        child: Container(
-                          height: 31,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFFDFCEF),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  // Your Travel Vibe Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Your Travel Vibe',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          _getCharacterTravelVibe(widget.characterName),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black87,
-                            height: 1.6,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        // Animal/Symbol Section
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF7D1332),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Animal image
-                              Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      _getCharacterAnimal(
-                                        widget.characterName,
-                                      )['image']!,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              // Animal info
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _getCharacterAnimal(
-                                        widget.characterName,
-                                      )['name']!,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    Text(
-                                      _getCharacterAnimal(
-                                        widget.characterName,
-                                      )['description']!,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
-                  ),
 
-                  const SizedBox(height: 32),
-
-                  // Your Perfect Travel Activities
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Your Perfect Travel Activities',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                    // Your Travel Vibe Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Your Travel Vibe',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        // 3x2 Grid layout - Dynamic based on character
-                        Builder(
-                          builder: (context) {
-                            final activities = _getCharacterActivities(
-                              widget.characterName,
-                            );
-                            return Column(
+                          const SizedBox(height: 12),
+                          Text(
+                            _getCharacterTravelVibe(widget.characterName),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black87,
+                              height: 1.6,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          // Animal/Symbol Section
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF7D1332),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    _buildActivityIconWithSvg(
-                                      activities[0]['label']!,
-                                      activities[0]['icon']!,
+                                // Animal image
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        _getCharacterAnimal(
+                                          widget.characterName,
+                                        )['image']!,
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    _buildActivityIconWithSvg(
-                                      activities[1]['label']!,
-                                      activities[1]['icon']!,
-                                    ),
-                                    _buildActivityIconWithSvg(
-                                      activities[2]['label']!,
-                                      activities[2]['icon']!,
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                const SizedBox(height: 16),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    _buildActivityIconWithSvg(
-                                      activities[3]['label']!,
-                                      activities[3]['icon']!,
-                                    ),
-                                    _buildActivityIconWithSvg(
-                                      activities[4]['label']!,
-                                      activities[4]['icon']!,
-                                    ),
-                                    _buildActivityIconWithSvg(
-                                      activities[5]['label']!,
-                                      activities[5]['icon']!,
-                                    ),
-                                  ],
+                                const SizedBox(width: 16),
+                                // Animal info
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _getCharacterAnimal(
+                                          widget.characterName,
+                                        )['name']!,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        _getCharacterAnimal(
+                                          widget.characterName,
+                                        )['description']!,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
-
-                  // Food Match Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Food Match for ${widget.characterName}',
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        if (_isLoadingData)
-                          const Center(child: CircularProgressIndicator())
-                        else if (_foods.isEmpty)
-                          const Text('No food recommendations available')
-                        else
-                          ..._foods.map((food) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: _buildFoodCardFromFirebase(food),
-                            );
-                          }),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
-
-                  // Thai Events Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Thai Events for ${widget.characterName}',
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        if (_isLoadingData)
-                          const Center(child: CircularProgressIndicator())
-                        else if (_festivals.isEmpty)
-                          const Text('No festival recommendations available')
-                        else
-                          ..._festivals.map((festival) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: _buildEventCardFromFirebase(festival),
-                            );
-                          }),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
-
-                  // Top Spots Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Top Spots for You',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        if (_isLoadingData)
-                          const Center(child: CircularProgressIndicator())
-                        else if (_locations.isEmpty)
-                          const Text('No location recommendations available')
-                        else
-                          ..._locations.map((location) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: _buildSpotCardFromFirebase(location),
-                            );
-                          }),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  // Discover the Beauty of Thailand Section
-                  Container(
-                    width: double.infinity,
-                    height: 300,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/landscape.png'),
-                        fit: BoxFit.fitWidth,
+                        ],
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 32),
+                    const SizedBox(height: 32),
 
-                  // CTA Buttons
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                  color: const Color(0xFFF5B544),
-                                  width: 4,
+                    // Your Perfect Travel Activities
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Your Perfect Travel Activities',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          // 3x2 Grid layout - Dynamic based on character
+                          Builder(
+                            builder: (context) {
+                              final activities = _getCharacterActivities(
+                                widget.characterName,
+                              );
+                              return Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      _buildActivityIconWithSvg(
+                                        activities[0]['label']!,
+                                        activities[0]['icon']!,
+                                      ),
+                                      _buildActivityIconWithSvg(
+                                        activities[1]['label']!,
+                                        activities[1]['icon']!,
+                                      ),
+                                      _buildActivityIconWithSvg(
+                                        activities[2]['label']!,
+                                        activities[2]['icon']!,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      _buildActivityIconWithSvg(
+                                        activities[3]['label']!,
+                                        activities[3]['icon']!,
+                                      ),
+                                      _buildActivityIconWithSvg(
+                                        activities[4]['label']!,
+                                        activities[4]['icon']!,
+                                      ),
+                                      _buildActivityIconWithSvg(
+                                        activities[5]['label']!,
+                                        activities[5]['icon']!,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Food Match Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Food Match for ${widget.characterName}',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          if (_isLoadingData)
+                            const Center(child: CircularProgressIndicator())
+                          else if (_foods.isEmpty)
+                            const Text('No food recommendations available')
+                          else
+                            ..._foods.map((food) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: _buildFoodCardFromFirebase(food),
+                              );
+                            }),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Thai Events Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Thai Events for ${widget.characterName}',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          if (_isLoadingData)
+                            const Center(child: CircularProgressIndicator())
+                          else if (_festivals.isEmpty)
+                            const Text('No festival recommendations available')
+                          else
+                            ..._festivals.map((festival) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: _buildEventCardFromFirebase(festival),
+                              );
+                            }),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Top Spots Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Top Spots for You',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          if (_isLoadingData)
+                            const Center(child: CircularProgressIndicator())
+                          else if (_locations.isEmpty)
+                            const Text('No location recommendations available')
+                          else
+                            ..._locations.map((location) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: _buildSpotCardFromFirebase(location),
+                              );
+                            }),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 40),
+
+                    // Discover the Beauty of Thailand Section
+                    Container(
+                      width: double.infinity,
+                      height: 300,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/landscape.png'),
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // CTA Buttons
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 60,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: const Color(0xFFF5B544),
+                                    width: 4,
+                                  ),
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: _isLoadingChallenge
+                                      ? null
+                                      : () async {
+                                          setState(() {
+                                            _isLoadingChallenge = true;
+                                          });
+
+                                          // Track challenge attempt in background (don't wait)
+                                          FirebaseService()
+                                              .trackChallengeAttempt()
+                                              .catchError((e) {
+                                                print(
+                                                  'Error tracking challenge attempt: $e',
+                                                );
+                                              });
+
+                                          // Navigate immediately
+                                          if (context.mounted) {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChallengeIntroScreen(
+                                                      characterName:
+                                                          widget.characterName,
+                                                    ),
+                                              ),
+                                            );
+
+                                            if (mounted) {
+                                              setState(() {
+                                                _isLoadingChallenge = false;
+                                              });
+                                            }
+                                          }
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFEB521A),
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    shadowColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 12,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_isLoadingChallenge)
+                                        const SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                  Colors.white,
+                                                ),
+                                          ),
+                                        )
+                                      else ...[
+                                        SvgPicture.asset(
+                                          'assets/challenge_asset/icon_award.svg',
+                                          width: 20,
+                                          height: 20,
+                                          colorFilter: const ColorFilter.mode(
+                                            Colors.white,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        const Flexible(
+                                          child: Text(
+                                            'Challenge',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                              child: ElevatedButton(
-                                onPressed: _isLoadingChallenge
-                                    ? null
-                                    : () async {
-                                        setState(() {
-                                          _isLoadingChallenge = true;
-                                        });
-
-                                        // Track challenge attempt in background (don't wait)
-                                        FirebaseService()
-                                            .trackChallengeAttempt()
-                                            .catchError((e) {
-                                              print(
-                                                'Error tracking challenge attempt: $e',
-                                              );
-                                            });
-
-                                        // Navigate immediately
-                                        if (context.mounted) {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChallengeIntroScreen(
-                                                    characterName:
-                                                        widget.characterName,
-                                                  ),
-                                            ),
-                                          );
-
-                                          if (mounted) {
-                                            setState(() {
-                                              _isLoadingChallenge = false;
-                                            });
-                                          }
-                                        }
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFEB521A),
-                                  foregroundColor: Colors.white,
-                                  elevation: 0,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: SizedBox(
+                              height: 60,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: const Color(0xFFF5B544),
+                                    width: 4,
                                   ),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    if (_isLoadingChallenge)
-                                      const SizedBox(
-                                        width: 24,
-                                        height: 24,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                Colors.white,
-                                              ),
-                                        ),
-                                      )
-                                    else ...[
-                                      SvgPicture.asset(
-                                        'assets/challenge_asset/icon_award.svg',
-                                        width: 20,
-                                        height: 20,
-                                        colorFilter: const ColorFilter.mode(
-                                          Colors.white,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      const Flexible(
+                                child: ElevatedButton(
+                                  onPressed: _saveAndShareImage,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFEB521A),
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    shadowColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 12,
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.share_rounded, size: 20),
+                                      SizedBox(width: 10),
+                                      Flexible(
                                         child: Text(
-                                          'Challenge',
+                                          'Share',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -1430,82 +1480,36 @@ class _FullResultScreenState extends State<FullResultScreen> {
                                         ),
                                       ),
                                     ],
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                  color: const Color(0xFFF5B544),
-                                  width: 4,
-                                ),
-                              ),
-                              child: ElevatedButton(
-                                onPressed: _saveAndShareImage,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFEB521A),
-                                  foregroundColor: Colors.white,
-                                  elevation: 0,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 12,
-                                  ),
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.share_rounded, size: 20),
-                                    SizedBox(width: 10),
-                                    Flexible(
-                                      child: Text(
-                                        'Share',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-                  // Hashtags
-                  Center(
-                    child: Text(
-                      AppLocalizations.hashtags,
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    // Hashtags
+                    Center(
+                      child: Text(
+                        AppLocalizations.hashtags,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 40),
-                ],
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 
@@ -2164,9 +2168,9 @@ class _FullResultScreenState extends State<FullResultScreen> {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         } else {
           if (mounted) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('Could not open maps')));
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Could not open maps')),
+            );
           }
         }
       }
